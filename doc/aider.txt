@@ -1,4 +1,4 @@
-* aider.txt* For aider.nvim plugin *aider-nvim*
+* aider.txt* For aider.nvim plugin *aider.nvim*
 
 1. Introduction
 2. Functions
