@@ -46,7 +46,7 @@ You can also set keybindings for the `OpenAider` function in Lua. Here's an exam
 local aider = require('aider')
 
 -- Then, set a keybinding for the OpenAider function
-vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua aider.OpenAider()<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua require("aider").OpenAider()<cr>', {noremap = true, silent = true})
 ```
 
 In this example, pressing `<leader>oa` in normal mode will call the `OpenAider` function.
