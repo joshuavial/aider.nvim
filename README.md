@@ -4,22 +4,34 @@ This is a plugin for Neovim that allows you to open a terminal window inside Neo
 
 ## Installation
 
-To install the Aider Plugin for Neovim, clone the repository into your Neovim configuration directory:
+You can install the Aider Plugin for Neovim using various package managers. Here are the instructions for some of the most common ones:
 
-```bash
-git clone https://github.com/joshuavial/aider.nvim ~/.config/nvim/plugged/
-```
+### vim-plug
 
-Then, add the following line to your Neovim configuration file:
+1. Add the following line to your Neovim configuration file:
 
 ```vim
 Plug 'joshuavial/aider.nvim'
 ```
 
-Finally, run the following command in Neovim to install the plugin:
+2. Run the following command in Neovim to install the plugin:
 
 ```vim
 :PlugInstall
+```
+
+### packer.nvim
+
+1. Add the following line to your Neovim configuration file:
+
+```lua
+use 'joshuavial/aider.nvim'
+```
+
+2. Run the following command in Neovim to install the plugin:
+
+```vim
+:PackerInstall
 ```
 
 ## Usage
