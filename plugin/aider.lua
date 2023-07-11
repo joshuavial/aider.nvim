@@ -19,6 +19,10 @@ end
 
 local M = {}
 
+function OnExit(job_id, data, event)
+    api.nvim_win_close(0, true)
+end
+
 function M.OpenAider(command, window_type)
     command = command or 'aider'
     window_type = window_type or 'vsplit'
@@ -27,10 +31,6 @@ function M.OpenAider(command, window_type)
 end
 
 return M
-
-function OnExit(job_id, data, event)
-    api.nvim_win_close(0, true)
-end
 
 vim.g.mapleader = vim.g.mapleader or ' '
 api.nvim_set_keymap('n', vim.g.mapleader..' ', ':lua OpenAider()<CR>', {noremap = true})
