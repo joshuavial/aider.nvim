@@ -6,9 +6,9 @@
         let l:buf = nvim_create_buf(v:false, v:true)
         " Open the terminal in the preferred window type
         if a:window_type == 'vsplit'
-            vnew | terminal
+            vnew | call setbufvar(l:buf, '&buftype', 'nofile') | execute 'terminal'
         elseif a:window_type == 'hsplit'
-            new | terminal
+            new | call setbufvar(l:buf, '&buftype', 'nofile') | execute 'terminal'
         else
             " Calculate the size and position of the floating window
             let l:width = nvim_win_get_width(0) - 4
@@ -19,6 +19,8 @@
             let l:win = nvim_open_win(l:buf, v:true, {'relative': 'editor', 'width': l:width, 'height': l:height, 'row': l:row, 'col': l:col})
             " Make the terminal window active
             call nvim_set_current_win(l:win)
+            " Set the buffer type to 'nofile' and open the terminal
+            call setbufvar(l:buf, '&buftype', 'nofile') | execute 'terminal'
         endif
     endfunction
 
