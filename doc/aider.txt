@@ -1,16 +1,16 @@
 * aider.txt* For aider.nvim plugin
 
-1. Introduction         |aider-introduction|
-2. Functions            |aider-functions|
-3. Keybindings          |aider-keybindings|
+1. Introduction
+2. Functions
+3. Keybindings
 
 ==============================================================================
-1. Introduction                                             *aider-introduction*
+1. Introduction
 
 Aider is a simple plugin for Neovim that allows you to open a terminal window inside Neovim and run the Aider.
 
 ==============================================================================
-2. Functions                                                *aider-functions*
+2. Functions
 
 The Aider Plugin for Neovim provides the `OpenAider` function, which you can call to open a terminal window with the Aider command. The `OpenAider` function accepts the following arguments:
 
@@ -26,7 +26,7 @@ Here are some examples of how to use the `OpenAider` function:
 ```
 
 ==============================================================================
-3. Keybindings                                              *aider-keybindings*
+3. Keybindings
 
 The plugin provides the following keybindings:
 
