@@ -4,35 +4,24 @@ This is a simple plugin for Neovim that allows you to open a terminal window ins
 
 ## Installation
 
-You can install the Aider Plugin for Neovim using various package managers. Here are the instructions for some of the most common ones:
+You can install the Aider Plugin for Neovim using various package managers. Here are the instructions for some common ones:
 
-
-### packer.nvim
-
-1. Add the following line to your Neovim configuration file:
+Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
 use 'joshuavial/aider.nvim'
 ```
 
-2. Run the following command in Neovim to install the plugin:
-
-```vim
-:PackerInstall
-```
-
-### vim-plug
-
-1. Add the following line to your Neovim configuration file:
+Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
 Plug 'joshuavial/aider.nvim'
 ```
 
-2. Run the following command in Neovim to install the plugin:
+Using [dein](https://github.com/Shougo/dein.vim)
 
-```vim
-:PlugInstall
+```viml
+call dein#add('joshuavial/aider.nvim')
 ```
 
 ## Usage
@@ -50,7 +39,9 @@ Here are some examples of how to use the `OpenAider` function:
 :lua OpenAider("AIDER_NO_AUTO_COMMITS=1 aider -3" )
 ```
 
+Run `aider --help` to see all the options you can pass to the cli.
+
 The plugin provides the following keybindings:
 
-- Press `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
-- Press `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat and .
+- `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
+- `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
