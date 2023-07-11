@@ -6,9 +6,9 @@
         let l:buf = nvim_create_buf(v:false, v:true)
         " Open the terminal in the preferred window type
         if a:window_type == 'vsplit'
-            vnew | terminal ++close
+            vnew | terminal
         elseif a:window_type == 'hsplit'
-            new | terminal ++close
+            new | terminal
         else
             " Calculate the size and position of the floating window
             let l:width = nvim_win_get_width(0) - 4
