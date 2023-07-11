@@ -39,6 +39,18 @@ Here are some examples of how to use the `OpenAider` function:
 :lua OpenAider("AIDER_NO_AUTO_COMMITS=1 aider -3" )
 ```
 
+You can also set keybindings for the `OpenAider` function in Lua. Here's an example:
+
+```lua
+-- First, require the plugin
+local aider = require('aider')
+
+-- Then, set a keybinding for the OpenAider function
+vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua aider.OpenAider()<cr>', {noremap = true, silent = true})
+```
+
+In this example, pressing `<leader>oa` in normal mode will call the `OpenAider` function.
+
 Run `aider --help` to see all the options you can pass to the cli.
 
 The plugin provides the following keybindings:
