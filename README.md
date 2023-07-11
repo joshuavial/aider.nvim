@@ -4,6 +4,6 @@ This is a plugin for Neovim that allows you to open a terminal window inside Neo
 
 ## Usage
 
-Press `<Space>` to open a terminal window with the Aider command.
+Press `<leader><Space><Space>` to open a terminal window with the Aider command.
 
-Press `<Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model.
+Press `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model.
