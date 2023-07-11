@@ -31,7 +31,7 @@ function M.OpenAider(command, window_type)
 end
 
 vim.g.mapleader = vim.g.mapleader or ' '
-api.nvim_set_keymap('n', vim.g.mapleader..' ', ':lua OpenAider()<CR>', {noremap = true})
-api.nvim_set_keymap('n', vim.g.mapleader..' 3', ':lua OpenAider("aider -3 --model gpt-3.5-turbo-16k")<CR>', {noremap = true})
+api.nvim_set_keymap('n', vim.g.mapleader..' ', ':lua M.OpenAider()<CR>', {noremap = true})
+api.nvim_set_keymap('n', vim.g.mapleader..' 3', ':lua M.OpenAider("aider -3 --model gpt-3.5-turbo-16k")<CR>', {noremap = true})
 
 return M
