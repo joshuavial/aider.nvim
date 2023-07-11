@@ -17,11 +17,11 @@ local function open_window(window_type)
     vim.bo[buf].buftype = 'nofile'
 end
 
-local M = {}
-
 function OnExit(job_id, data, event)
     api.nvim_win_close(0, true)
 end
+
+local M = {}
 
 function M.OpenAider(command, window_type)
     command = command or 'aider'
@@ -30,8 +30,8 @@ function M.OpenAider(command, window_type)
     vim.fn.termopen(command, {on_exit = 'OnExit'})
 end
 
-return M
-
 vim.g.mapleader = vim.g.mapleader or ' '
 api.nvim_set_keymap('n', vim.g.mapleader..' ', ':lua OpenAider()<CR>', {noremap = true})
 api.nvim_set_keymap('n', vim.g.mapleader..' 3', ':lua OpenAider("aider -3 --model gpt-3.5-turbo-16k")<CR>', {noremap = true})
+
+return M
