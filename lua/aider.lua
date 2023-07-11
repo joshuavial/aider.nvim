@@ -32,6 +32,6 @@ end
 
 vim.g.mapleader = vim.g.mapleader or ' '
 api.nvim_set_keymap('n', '<leader> ', ':lua require("aider").OpenAider()<CR>', {noremap = true, silent = true})
-api.nvim_set_keymap('n', '<leader>3', ':lua require("aider").OpenAider("aider -3 --model gpt-3.5-turbo-16k")<CR>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', '<leader>3', ':lua require("aider").OpenAider("aider -3")<CR>', {noremap = true, silent = true})
 
 return M
