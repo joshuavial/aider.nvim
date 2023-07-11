@@ -1,5 +1,5 @@
     " Map <leader> space space to open terminal and call 'aider'
-    nnoremap <leader><Space><Space> :call OpenAider()<CR>
+    nmap <leader><Space><Space> :call OpenAider()<CR>
 
     function! s:OpenWindow(window_type)
         " Create a new buffer for the terminal
