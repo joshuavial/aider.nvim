@@ -24,7 +24,7 @@
 
     function! s:RunAider()
         " Run 'echo' in the terminal
-        call termopen('echo "Hello, World!"', {'on_exit': function('s:OnExit')})
+        call termopen(['echo', 'Hello, World!'], {'on_exit': function('s:OnExit')})
     endfunction
 
     function! OpenAider()
