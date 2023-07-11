@@ -17,14 +17,11 @@ local function open_window(window_type)
     vim.bo[buf].buftype = 'nofile'
 end
 
-local function run_aider()
-    vim.fn.termopen('aider', {on_exit = 'OnExit'})
-end
-
-function OpenAider(window_type)
+function OpenAider(command, window_type)
+    command = command or 'aider'
     window_type = window_type or 'vsplit'
     open_window(window_type)
-    run_aider()
+    vim.fn.termopen(command, {on_exit = 'OnExit'})
 end
 
 function OnExit(job_id, data, event)
