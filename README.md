@@ -34,9 +34,9 @@ The Aider Plugin for Neovim provides the `OpenAider` function, which you can cal
 Here are some examples of how to use the `OpenAider` function:
 
 ```vim
-:lua OpenAider() 
-:lua OpenAider("aider", "float") 
-:lua OpenAider("AIDER_NO_AUTO_COMMITS=1 aider -3" )
+:lua require('aider').OpenAider() 
+:lua require('aider').OpenAider("aider", "float") 
+:lua require('aider').OpenAider("AIDER_NO_AUTO_COMMITS=1 aider -3" )
 ```
 
 You can also set keybindings for the `OpenAider` function in Lua. Here's an example:
