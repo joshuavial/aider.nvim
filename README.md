@@ -20,7 +20,7 @@ Plug 'joshuavial/aider.nvim'
 
 Using [dein](https://github.com/Shougo/dein.vim)
 
-```viml
+```vim
 call dein#add('joshuavial/aider.nvim')
 ```
 
@@ -48,8 +48,7 @@ Here are some examples of how to use the `OpenAider` function:
 You can also set keybindings for the `OpenAider` function in Lua. Here's an example:
 
 ```lua
-
--- Then, set a keybinding for the OpenAider function
+-- set a keybinding for the OpenAider function
 vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua require("aider").OpenAider()<cr>', {noremap = true, silent = true})
 ```
 

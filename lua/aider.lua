@@ -31,7 +31,7 @@ function M.OpenAider(command, window_type)
 end
 
 vim.g.mapleader = vim.g.mapleader or ' '
-api.nvim_set_keymap('n', '<leader> ', ':lua require("aider").OpenAider()<CR>', {noremap = true, silent = true})
-api.nvim_set_keymap('n', '<leader>3', ':lua require("aider").OpenAider("aider -3")<CR>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', '<leader>  ', ':lua require("aider").OpenAider()<CR>', {noremap = true, silent = true})
+api.nvim_set_keymap('n', '<leader> 3', ':lua require("aider").OpenAider("aider -3")<CR>', {noremap = true, silent = true})
 
 return M
