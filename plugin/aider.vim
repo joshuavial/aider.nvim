@@ -30,9 +30,9 @@
         call termopen(['aider'], {'on_exit': function('s:OnExit')})
     endfunction
 
-    function! OpenAider()
+    function! OpenAider(window_type)
         " Get the user's preferred window type
-        let l:window_type = get(g:, 'aider_window_type', 'vsplit')
+        let l:window_type = get(a:, 'window_type', get(g:, 'aider_window_type', 'vsplit'))
         " Open the window
         call s:OpenWindow(l:window_type)
         " Run 'aider'
