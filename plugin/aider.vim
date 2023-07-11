@@ -1,16 +1,14 @@
     " Map <leader> space space to open terminal and call 'aider'
     nnoremap <leader><Space><Space> :call OpenAider()<CR>
 
-    function! OpenAider()
+    function! s:OpenWindow(window_type)
         " Create a new buffer for the terminal
         let l:buf = nvim_create_buf(v:false, v:true)
-        " Get the user's preferred window type
-        let l:window_type = get(g:, 'aider_window_type', 'vsplit')
         " Open the terminal in the preferred window type
-        if l:window_type == 'vsplit'
-            vnew | terminal ++close | call termopen('aider', {'on_exit': function('s:OnExit')})
-        elseif l:window_type == 'hsplit'
-            new | terminal ++close | call termopen('aider', {'on_exit': function('s:OnExit')})
+        if a:window_type == 'vsplit'
+            vnew | terminal ++close
+        elseif a:window_type == 'hsplit'
+            new | terminal ++close
         else
             " Calculate the size and position of the floating window
             let l:width = nvim_win_get_width(0) - 4
@@ -21,9 +19,21 @@
             let l:win = nvim_open_win(l:buf, v:true, {'relative': 'editor', 'width': l:width, 'height': l:height, 'row': l:row, 'col': l:col})
             " Make the terminal window active
             call nvim_set_current_win(l:win)
-            " Run 'aider' in the terminal
-            call termopen('aider', {'on_exit': function('s:OnExit')})
         endif
+    endfunction
+
+    function! s:RunAider()
+        " Run 'aider' in the terminal
+        call termopen('aider', {'on_exit': function('s:OnExit')})
+    endfunction
+
+    function! OpenAider()
+        " Get the user's preferred window type
+        let l:window_type = get(g:, 'aider_window_type', 'vsplit')
+        " Open the window
+        call s:OpenWindow(l:window_type)
+        " Run 'aider'
+        call s:RunAider()
     endfunction
 
     function! s:OnExit(job_id, data, event)
