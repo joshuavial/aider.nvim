@@ -7,16 +7,30 @@
 ==============================================================================
 1. Introduction                                             *aide-introduction*
 
-This is the introduction.
+Aider is a simple plugin for Neovim that allows you to open a terminal window inside Neovim and run the Aider.
 
 ==============================================================================
 2. Functions                                                *aide-functions*
 
-This is the functions.
+The Aider Plugin for Neovim provides the `OpenAider` function, which you can call to open a terminal window with the Aider command. The `OpenAider` function accepts the following arguments:
+
+- `command`: The full aider command to use - defaults to `aider`
+- `window`: The window style to use 'vsplit' (default), 'hsplit' or 'float'
+
+Here are some examples of how to use the `OpenAider` function:
+
+```vim
+:lua require('aider').OpenAider() 
+:lua require('aider').OpenAider("aider", "float") 
+:lua require('aider').OpenAider("AIDER_NO_AUTO_COMMITS=1 aider -3" )
+```
 
 ==============================================================================
 3. Keybindings                                              *aide-keybindings*
 
-This is the keybindings.
+The plugin provides the following keybindings:
+
+- `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
+- `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
 
 vim:tw=78:ts=8:ft=help:norl:
