@@ -19,11 +19,11 @@
             let l:col = 2
             " Create a new floating window for the terminal
             let l:win = nvim_open_win(l:buf, v:true, {'relative': 'editor', 'width': l:width, 'height': l:height, 'row': l:row, 'col': l:col})
+            " Make the terminal window active
+            call nvim_set_current_win(l:win)
         endif
-        " Run 'aider' in the terminal
-        call termopen('aider', {'on_exit': function('s:OnExit')})
-        " Make the terminal window active
-        call nvim_set_current_win(l:win)
+        " Run 'aider' in the terminal when the TermOpen event is triggered
+        autocmd TermOpen * call termopen('aider', {'on_exit': function('s:OnExit')})
     endfunction
 
     function! s:OnExit(job_id, data, event)
