@@ -42,8 +42,6 @@ Here are some examples of how to use the `OpenAider` function:
 You can also set keybindings for the `OpenAider` function in Lua. Here's an example:
 
 ```lua
--- First, require the plugin
-local aider = require('aider')
 
 -- Then, set a keybinding for the OpenAider function
 vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua require("aider").OpenAider()<cr>', {noremap = true, silent = true})
