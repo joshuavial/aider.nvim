@@ -60,3 +60,7 @@ The plugin provides the following keybindings:
 
 - `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
 - `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
+
+# NOTE
+
+if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
