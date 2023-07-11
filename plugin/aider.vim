@@ -8,9 +8,9 @@
         let l:window_type = get(g:, 'aider_window_type', 'vsplit')
         " Open the terminal in the preferred window type
         if l:window_type == 'vsplit'
-            vnew | terminal
+            vnew | terminal ++close | call termopen('aider', {'on_exit': function('s:OnExit')})
         elseif l:window_type == 'hsplit'
-            new | terminal
+            new | terminal ++close | call termopen('aider', {'on_exit': function('s:OnExit')})
         else
             " Calculate the size and position of the floating window
             let l:width = nvim_win_get_width(0) - 4
@@ -21,9 +21,9 @@
             let l:win = nvim_open_win(l:buf, v:true, {'relative': 'editor', 'width': l:width, 'height': l:height, 'row': l:row, 'col': l:col})
             " Make the terminal window active
             call nvim_set_current_win(l:win)
+            " Run 'aider' in the terminal
+            call termopen('aider', {'on_exit': function('s:OnExit')})
         endif
-        " Run 'aider' in the terminal when the TermOpen event is triggered
-        autocmd TermOpen * call termopen('aider', {'on_exit': function('s:OnExit')})
     endfunction
 
     function! s:OnExit(job_id, data, event)
