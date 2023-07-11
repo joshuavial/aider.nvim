@@ -36,6 +36,20 @@ use 'joshuavial/aider.nvim'
 
 ## Usage
 
-Press `<leader><Space><Space>` to open a terminal window with the Aider command.
+The Aider Plugin for Neovim provides the `OpenAider` function, which you can call to open a terminal window with the Aider command. The `OpenAider` function accepts the following arguments:
 
-Press `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model.
+- `model`: The name of the model to use. Default is `gpt-3.5-turbo-16k`.
+- `prompt`: The initial prompt to pass to the Aider command. Default is an empty string.
+
+Here are some examples of how to use the `OpenAider` function:
+
+```vim
+:OpenAider gpt-3.5-turbo-16k "Hello, Aider!"
+:OpenAider gpt-3.5-turbo-16k
+:OpenAider
+```
+
+You can also use the following keybindings:
+
+- Press `<leader><Space><Space>` to open a terminal window with the Aider command.
+- Press `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model.
