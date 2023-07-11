@@ -1,0 +1,22 @@
+* aide.txt* For aide.nvim plugin
+
+1. Introduction         |aide-introduction|
+2. Functions            |aide-functions|
+3. Keybindings          |aide-keybindings|
+
+==============================================================================
+1. Introduction                                             *aide-introduction*
+
+This is the introduction.
+
+==============================================================================
+2. Functions                                                *aide-functions*
+
+This is the functions.
+
+==============================================================================
+3. Keybindings                                              *aide-keybindings*
+
+This is the keybindings.
+
+vim:tw=78:ts=8:ft=help:norl:
