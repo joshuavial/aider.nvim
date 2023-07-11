@@ -23,8 +23,8 @@
     endfunction
 
     function! s:RunAider()
-        " Run 'aider' in the terminal
-        call termopen('aider', {'on_exit': function('s:OnExit')})
+        " Run 'echo' in the terminal
+        call termopen('echo "Hello, World!"', {'on_exit': function('s:OnExit')})
     endfunction
 
     function! OpenAider()
