@@ -6,13 +6,13 @@
         let l:buf = nvim_create_buf(v:false, v:true)
         " Open the terminal in the preferred window type
         if a:window_type == 'vsplit'
-            vnew | call setbufvar(l:buf, '&buftype', 'nofile')
+            vnew 
         elseif a:window_type == 'hsplit'
-            new | call setbufvar(l:buf, '&buftype', 'nofile')
+            new 
         else
             " Calculate the size and position of the floating window
-            let l:width = nvim_win_get_width(0) - 4
-            let l:height = nvim_win_get_height(0) - 4
+            let l:width = nvim_win_get_width(0) - 10
+            let l:height = nvim_win_get_height(0) - 10
             let l:row = 2
             let l:col = 2
             " Create a new floating window for the terminal
@@ -20,15 +20,14 @@
             " Make the terminal window active
             call nvim_set_current_win(l:win)
             " Set the buffer type to 'nofile'
-            call setbufvar(l:buf, '&buftype', 'nofile')
         endif
+        call setbufvar(l:buf, '&buftype', 'nofile')
     endfunction
 
     function! s:RunAider()
         " Open the terminal
-        execute 'terminal'
-        " Run 'echo' in the terminal
-        call termopen(['echo', 'Hello, World!'], {'on_exit': function('s:OnExit')})
+        "execute 'terminal'
+        call termopen(['aider'], {'on_exit': function('s:OnExit')})
     endfunction
 
     function! OpenAider()
