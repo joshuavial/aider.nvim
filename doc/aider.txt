@@ -8,6 +8,7 @@
 1. Introduction
 
 Aider is a simple plugin for Neovim that allows you to open a terminal window inside Neovim and run the Aider.
+You will need the aider cli installed for it to work - https://github.com/paul-gauthier/aider
 
 ==============================================================================
 2. Functions
