@@ -31,6 +31,12 @@ The Aider Plugin for Neovim provides the `OpenAider` function, which you can cal
 - `command`: The full aider command to use - defaults to `aider`
 - `window`: The window style to use 'vsplit' (default), 'hsplit' or 'float'
 
+Before using the `OpenAider` function, you need to require the `aider` module in your configuration file. Add the following line to your `.vimrc` or `init.vim`:
+
+```vim
+lua require('aider')
+```
+
 Here are some examples of how to use the `OpenAider` function:
 
 ```vim
