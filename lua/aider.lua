@@ -31,7 +31,9 @@ function M.OpenAider(command, window_type)
     for _, buf in ipairs(buffers) do
         if vim.api.nvim_buf_is_loaded(buf) then
             local bufname = vim.api.nvim_buf_get_name(buf)
-            command = command .. " " .. bufname
+            if not bufname:match('^term:') then
+                command = command .. " " .. bufname
+            end
         end
     end
     vim.fn.termopen(command, {on_exit = 'OnExit'})
