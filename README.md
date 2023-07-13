@@ -33,15 +33,7 @@ The Aider Plugin for Neovim provides the `OpenAider` function, which you can cal
 
 Note: When Aider opens, it will automatically add all open buffers to the command.
 
-## Working with Buffers in Vim
 
-If you're not familiar with buffers in Vim, here are some tips:
-
-- Use `:ls` or `:buffers` to see all open buffers.
-- Use `:b <number>` or `:buffer <number>` to switch to a specific buffer. Replace `<number>` with the buffer number.
-- Use `:bd` or `:bdelete` to close the current buffer.
-- Use `:bd <number>` or `:bdelete <number>` to close a specific buffer. Replace `<number>` with the buffer number.
-- Use `:bufdo bd` to close all buffers.
 
 Before using the `OpenAider` function, you need to require the `aider` module in your configuration file. Add the following line to your `.vimrc` or `init.vim`:
 
@@ -73,6 +65,16 @@ The plugin provides the following keybindings:
 - `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
 - `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
 
-# NOTE
+## Tips for Working with Buffers in Vim
+
+If you're not familiar with buffers in Vim, here are some tips:
+
+- Use `:ls` or `:buffers` to see all open buffers.
+- Use `:b <number>` or `:buffer <number>` to switch to a specific buffer. Replace `<number>` with the buffer number.
+- Use `:bd` or `:bdelete` to close the current buffer.
+- Use `:bd <number>` or `:bdelete <number>` to close a specific buffer. Replace `<number>` with the buffer number.
+- Use `:bufdo bd` to close all buffers.
+
+## NOTE
 
 if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
