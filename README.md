@@ -31,6 +31,18 @@ The Aider Plugin for Neovim provides the `OpenAider` function, which you can cal
 - `command`: The full aider command to use - defaults to `aider`
 - `window`: The window style to use 'vsplit' (default), 'hsplit' or 'float'
 
+Note: When Aider opens, it will automatically add all open buffers to the command.
+
+## Working with Buffers in Vim
+
+If you're not familiar with buffers in Vim, here are some tips:
+
+- Use `:ls` or `:buffers` to see all open buffers.
+- Use `:b <number>` or `:buffer <number>` to switch to a specific buffer. Replace `<number>` with the buffer number.
+- Use `:bd` or `:bdelete` to close the current buffer.
+- Use `:bd <number>` or `:bdelete <number>` to close a specific buffer. Replace `<number>` with the buffer number.
+- Use `:bufdo bd` to close all buffers.
+
 Before using the `OpenAider` function, you need to require the `aider` module in your configuration file. Add the following line to your `.vimrc` or `init.vim`:
 
 ```vim
