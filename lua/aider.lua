@@ -31,7 +31,7 @@ function M.OpenAider(command, window_type)
     for _, buf in ipairs(buffers) do
         if vim.api.nvim_buf_is_loaded(buf) then
             local bufname = vim.api.nvim_buf_get_name(buf)
-            if not bufname:match('^term:') then
+            if not bufname:match('^term:') and not bufname:match('NeogitConsole') then
                 command = command .. " " .. bufname
             end
         end
