@@ -1,46 +1,84 @@
-local api = vim.api
-
-local function open_window(window_type)
-    local buf = api.nvim_create_buf(false, true)
-    if window_type == 'vsplit' then
-        vim.cmd('vnew')
-    elseif window_type == 'hsplit' then
-        vim.cmd('new')
-    else
-        local width = api.nvim_win_get_width(0) - 10
-        local height = api.nvim_win_get_height(0) - 10
-        local row = 2
-        local col = 2
-        local win = api.nvim_open_win(buf, true, {relative = 'editor', width = width, height = height, row = row, col = col})
-        api.nvim_set_current_win(win)
-    end
-    vim.bo[buf].buftype = 'nofile'
-end
-
-function OnExit(job_id, data, event)
-    api.nvim_win_close(0, true)
-end
-
+local helpers = require('helpers')
 local M = {}
 
-function M.OpenAider(command, window_type)
-    command = command or 'aider'
-    window_type = window_type or 'vsplit'
-    open_window(window_type)
-    local buffers = vim.api.nvim_list_bufs()
-    for _, buf in ipairs(buffers) do
-        if vim.api.nvim_buf_is_loaded(buf) then
-            local bufname = vim.api.nvim_buf_get_name(buf)
-            if not bufname:match('^term:') and not bufname:match('NeogitConsole') then
-                command = command .. " " .. bufname
-            end
-        end
-    end
-    vim.fn.termopen(command, {on_exit = 'OnExit'})
+M.aider_buf = nil
+
+function M.AiderBackground(args, message)
+  helpers.showProcessingCue()
+  local command = helpers.build_background_command(args, message)
+  local handle = vim.loop.spawn('bash', {
+    args = {'-c', command}
+  }, NotifyOnExit)
+
+  vim.notify("Aider started " .. (args or ''))
 end
 
-vim.g.mapleader = vim.g.mapleader or ' '
-api.nvim_set_keymap('n', '<leader>  ', ':lua require("aider").OpenAider()<CR>', {noremap = true, silent = true})
-api.nvim_set_keymap('n', '<leader> 3', ':lua require("aider").OpenAider("aider -3")<CR>', {noremap = true, silent = true})
+
+function OnExit(code, signal)
+  if M.aider_buf then
+    vim.api.nvim_command('bd! ' .. M.aider_buf)
+    M.aider_buf = nil
+  end
+end
+
+function M.AiderOpen(args, window_type)
+  window_type = window_type or 'vsplit'
+  if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
+    helpers.open_buffer_in_new_window(window_type, M.aider_buf)
+  else
+    command = 'aider ' .. (args or '')
+    helpers.open_window(window_type)
+    command = helpers.add_buffers_to_command(command)
+    M.aider_job_id = vim.fn.termopen(command, {on_exit = OnExit})
+    M.aider_buf = vim.api.nvim_get_current_buf()
+  end
+end
+
+function M.AiderOnBufferOpen(bufnr)
+  bufnr = tonumber(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  if not bufname or bufname:match('^term://') then
+    return
+  end
+  local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
+  if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
+    local line_to_add = '/add ' .. relative_filename
+    vim.fn.chansend(M.aider_job_id, line_to_add .. '\n')
+  end
+end
+
+function M.AiderOnBufferClose(bufnr)
+  bufnr = tonumber(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  if not bufname or bufname:match('^term://') then
+    return
+  end
+  local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
+  if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
+    local line_to_drop = '/drop ' .. relative_filename
+    vim.fn.chansend(M.aider_job_id, line_to_drop .. '\n')
+  end
+end
+
+function M.setup(config)
+  M.config = config or {}
+  M.config.auto_manage_context = M.config.auto_manage_context or true
+  M.config.default_bindings = M.config.default_bindings or true
+
+  if M.config.auto_manage_context then
+    vim.api.nvim_command('autocmd BufAdd * lua AiderOnBufferOpen(vim.fn.expand("<abuf>"))')
+    vim.api.nvim_command('autocmd BufDelete * lua AiderOnBufferClose(vim.fn.expand("<abuf>"))')
+    _G.AiderOnBufferOpen = M.AiderOnBufferOpen
+    _G.AiderOnBufferClose = M.AiderOnBufferClose
+  end
+
+  _G.AiderOpen = M.AiderOpen
+  _G.AiderBackground = M.AiderBackground
+  _G.aider_background_status = 'idle'
+
+  if M.config.default_bindings then
+    require('keybindings')
+  end
+end
 
 return M
