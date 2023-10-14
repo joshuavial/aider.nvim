@@ -8,7 +8,7 @@ NOTE : the function signatures have changed so if you have custom bindings, you 
 ### Added
 - setup function to easily toggle features
 - auto_manage_context will add and drop files in aider as you open and close buffers
-- AiderBackground() (<leader><space>b) will run aider in a background task to complete todo comments in the code base
+- AiderBackground() (`<leader><space>b`) will run aider in a background task to complete todo comments in the code base
 - expose a global aider_background_status variable for easy visual feedback
 - closing the Aider split and calling AiderOpen again will reattach to the existing process
 
