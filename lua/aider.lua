@@ -35,6 +35,9 @@ function M.AiderOpen(args, window_type)
 end
 
 function M.AiderOnBufferOpen(bufnr)
+  if not vim.g.aider_buffer_sync or vim.g.aider_buffer_sync == 0 then
+    return
+  end
   bufnr = tonumber(bufnr)
   local bufname = vim.api.nvim_buf_get_name(bufnr)
   local buftype = vim.fn.getbufvar(bufnr, '&buftype') 
@@ -49,6 +52,9 @@ function M.AiderOnBufferOpen(bufnr)
 end
 
 function M.AiderOnBufferClose(bufnr)
+  if not vim.g.aider_buffer_sync or vim.g.aider_buffer_sync == 0 then
+    return
+  end
   bufnr = tonumber(bufnr)
   local bufname = vim.api.nvim_buf_get_name(bufnr)
   if not bufname or bufname:match('^term://') then
@@ -65,6 +71,8 @@ function M.setup(config)
   M.config = config or {}
   M.config.auto_manage_context = M.config.auto_manage_context or true
   M.config.default_bindings = M.config.default_bindings or true
+
+  vim.g.aider_buffer_sync = M.config.auto_manage_context
 
   if M.config.auto_manage_context then
     vim.api.nvim_command('autocmd BufReadPost * lua AiderOnBufferOpen(vim.fn.expand("<abuf>"))')
