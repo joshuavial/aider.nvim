@@ -1,6 +1,12 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [0.3.1] - 2023-10-22
+
+### Fixed
+- switched the AiderOnBufferOpen autocmd to BufReadPost from BufOpen to avoid terminal windows
+
 ## [0.3.0] - 2023-10-15
 
 NOTE : the function signatures have changed so if you have custom bindings, you will need to update them.

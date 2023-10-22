@@ -37,7 +37,8 @@ end
 function M.AiderOnBufferOpen(bufnr)
   bufnr = tonumber(bufnr)
   local bufname = vim.api.nvim_buf_get_name(bufnr)
-  if not bufname or bufname:match('^term://') then
+  local buftype = vim.fn.getbufvar(bufnr, '&buftype') 
+  if not bufname or bufname:match('^term://') or buftype == 'terminal' then
     return
   end
   local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
@@ -66,7 +67,7 @@ function M.setup(config)
   M.config.default_bindings = M.config.default_bindings or true
 
   if M.config.auto_manage_context then
-    vim.api.nvim_command('autocmd BufAdd * lua AiderOnBufferOpen(vim.fn.expand("<abuf>"))')
+    vim.api.nvim_command('autocmd BufReadPost * lua AiderOnBufferOpen(vim.fn.expand("<abuf>"))')
     vim.api.nvim_command('autocmd BufDelete * lua AiderOnBufferClose(vim.fn.expand("<abuf>"))')
     _G.AiderOnBufferOpen = M.AiderOnBufferOpen
     _G.AiderOnBufferClose = M.AiderOnBufferClose
