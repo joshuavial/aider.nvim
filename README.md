@@ -115,6 +115,21 @@ lualine_x = {{
 }
 ```
 
+## Reloading buffers
+
+Because the AiderOnBufferOpen command is bound to BufReadPost it will fire whenever a buffer is reloaded if you just use a `:e!`. The ReloadBuffer function below will prevent a file from being added to aider every time it's openeed.
+
+```lua
+function ReloadBuffer()
+  local temp_sync_value = vim.g.aider_buffer_sync                            
+  vim.g.aider_buffer_sync = 0                                                
+  vim.api.nvim_exec2('e!', {output = false})
+  vim.g.aider_buffer_sync = temp_sync_value
+end
+```
+
+To use this function, simply call `:lua ReloadBuffer()` (or bind it to your favourite shortcut). This will refresh the current buffer and display any changes made by Aider.
+
 ## Tips for Working with Buffers in Vim
 
 If you're not familiar with buffers in Vim, here are some tips:
