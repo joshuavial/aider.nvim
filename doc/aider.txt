@@ -19,13 +19,15 @@ The plugin provides a `setup` function that you can use to configure the plugin.
 
 - `auto_manage_context`: A boolean value that determines whether the plugin should automatically manage the context. If set to `true`, the plugin will automatically add and remove buffers from the context as they are opened and closed. Defaults to `true`.
 - `default_bindings`: A boolean value that determines whether the plugin should use the default keybindings. If set to `true`, the plugin will require the keybindings file and set the default keybindings. Defaults to `true`.
+- `ignore_buffers`: A list of matching patterns for buffer names that will be ignored. Defaults to `{'^term:', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'}`.
 
 Here is an example of how to use the `setup` function:
 
 ```lua
 require('aider').setup({
   auto_manage_context = false,
-  default_bindings = false
+  default_bindings = false,
+  ignore_buffers = {},
 })
 ```
 
