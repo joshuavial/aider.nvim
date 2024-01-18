@@ -48,15 +48,19 @@ local function showProcessingCue()
   set_idle_status(false)
 end
 
-local function add_buffers_to_command(command)
+local function add_buffers_to_command(command, ignore_buffers)
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
     if vim.api.nvim_buf_is_loaded(buf) then
       local bufname = vim.api.nvim_buf_get_name(buf)
-      if not bufname:match('^term:') and not bufname:match('NeogitConsole') then
-        command = command .. " " .. bufname
+      for _, ignore_buf in ipairs(ignore_buffers or {}) do
+        if bufname:match(ignore_buf) then
+          goto continue
+        end
       end
+      command = command .. " " .. bufname
     end
+    ::continue::
   end
   return command
 end

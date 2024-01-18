@@ -28,7 +28,7 @@ function M.AiderOpen(args, window_type)
   else
     command = 'aider ' .. (args or '')
     helpers.open_window(window_type)
-    command = helpers.add_buffers_to_command(command)
+    command = helpers.add_buffers_to_command(command, M.config.ignore_buffers)
     M.aider_job_id = vim.fn.termopen(command, {on_exit = OnExit})
     M.aider_buf = vim.api.nvim_get_current_buf()
   end
@@ -68,9 +68,12 @@ function M.AiderOnBufferClose(bufnr)
 end
 
 function M.setup(config)
-  M.config = config or {}
-  M.config.auto_manage_context = M.config.auto_manage_context or true
-  M.config.default_bindings = M.config.default_bindings or true
+  M.config = {
+    auto_manage_context = true,
+    default_bindings = true,
+    ignore_buffers = {'^term:', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'},
+  }
+  M.config = vim.tbl_deep_extend('force', M.config, config or {})
 
   vim.g.aider_buffer_sync = M.config.auto_manage_context
 
