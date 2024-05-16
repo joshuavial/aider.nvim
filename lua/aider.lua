@@ -2,6 +2,14 @@ local helpers = require('helpers')
 local M = {}
 
 M.aider_buf = nil
+M.git_root_path = nil
+
+local function get_git_root_path()
+  local handle = io.popen('git rev-parse --show-toplevel')
+  local result = handle:read("*a")
+  handle:close()
+  return result:gsub("\n$", "")
+end
 
 function M.AiderBackground(args, message)
   helpers.showProcessingCue()
@@ -13,7 +21,6 @@ function M.AiderBackground(args, message)
   vim.notify("Aider started " .. (args or ''))
 end
 
-
 function OnExit(code, signal)
   if M.aider_buf then
     vim.api.nvim_command('bd! ' .. M.aider_buf)
@@ -23,12 +30,15 @@ end
 
 function M.AiderOpen(args, window_type)
   window_type = window_type or 'vsplit'
+  if not M.git_root_path then
+    M.git_root_path = get_git_root_path()
+  end
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
     helpers.open_buffer_in_new_window(window_type, M.aider_buf)
   else
     command = 'aider ' .. (args or '')
     helpers.open_window(window_type)
-    command = helpers.add_buffers_to_command(command)
+    command = helpers.add_buffers_to_command(command, M.git_root_path)
     M.aider_job_id = vim.fn.termopen(command, {on_exit = OnExit})
     M.aider_buf = vim.api.nvim_get_current_buf()
   end
@@ -44,7 +54,10 @@ function M.AiderOnBufferOpen(bufnr)
   if not bufname or bufname:match('^term://') or buftype == 'terminal' then
     return
   end
-  local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
+  if not M.git_root_path then
+    M.git_root_path = get_git_root_path()
+  end
+  local relative_filename = bufname:gsub(M.git_root_path, "")
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
     local line_to_add = '/add ' .. relative_filename
     vim.fn.chansend(M.aider_job_id, line_to_add .. '\n')
@@ -60,7 +73,10 @@ function M.AiderOnBufferClose(bufnr)
   if not bufname or bufname:match('^term://') then
     return
   end
-  local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
+  if not M.git_root_path then
+    M.git_root_path = get_git_root_path()
+  end
+  local relative_filename = bufname:gsub(M.git_root_path, "")
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
     local line_to_drop = '/drop ' .. relative_filename
     vim.fn.chansend(M.aider_job_id, line_to_drop .. '\n')

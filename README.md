@@ -32,8 +32,6 @@ The `AiderOpen` function opens a terminal window with the Aider command. It acce
 - `args`: The command line arguments to pass to `aider` - defaults to ""
 - `window_type`: The window style to use 'vsplit' (default), 'hsplit' or 'editor'
 
-NOTE: if an Aider job is already running calling AiderOpen will reattach to it, even if it is called with different flags
-
 The `AiderBackground` function runs the Aider command in the background. It accepts the following arguments:
 - `args`: The command line arguments to pass to `aider` - defaults to ""
 - `message`: The message to pass to the Aider command - defaults to "Complete as many todo items as you can and remove the comment for any item you complete."
@@ -88,6 +86,10 @@ require('aider').setup({
 ```
 
 In this example, the `setup` function is called with a table that sets `auto_manage_context` to `false` and `default_bindings` to `false`. This means that the plugin will not automatically manage the context and will not use the default keybindings.
+
+## Handling File Paths Relative to the GitHub Root
+
+The Aider Plugin for Neovim has been updated to handle file paths relative to the GitHub root path. This means that when you open files or work with buffers, the plugin will correctly add or manage these files based on their path relative to the root of your GitHub repository. This ensures that file paths are handled consistently, regardless of the directory from which you opened Neovim.
 
 ## aider_background_status
 
@@ -160,4 +162,3 @@ end
 ## NOTE
 
 if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
-
