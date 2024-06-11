@@ -69,8 +69,13 @@ end
 
 function M.setup(config)
   M.config = config or {}
-  M.config.auto_manage_context = M.config.auto_manage_context or true
-  M.config.default_bindings = M.config.default_bindings or true
+  if M.config.auto_manage_context == nil then
+    M.config.auto_manage_context = true
+  end
+
+  if M.config.default_bindings == nil then
+    M.config.default_bindings = true
+  end
 
   vim.g.aider_buffer_sync = M.config.auto_manage_context
 
