@@ -25,7 +25,16 @@ return {
 
     -- close_hidden_buffers function
     _G.close_hidden_buffers = function()
-      -- ... (paste the function from the README here)
+      local curr_buf_num = vim.api.nvim_get_current_buf()
+      local all_buf_nums = vim.api.nvim_list_bufs()
+
+      for _, buf_num in ipairs(all_buf_nums) do
+        if buf_num ~= curr_buf_num and vim.api.nvim_buf_is_valid(buf_num) and vim.api.nvim_buf_is_loaded(buf_num) and vim.fn.bufwinnr(buf_num) == -1 then
+          if vim.fn.getbufvar(buf_num, '&buftype') ~= 'terminal' then
+            vim.api.nvim_buf_delete(buf_num, { force = true })
+          end
+        end
+      end
     end
     vim.api.nvim_set_keymap('n', '<leader>ch', '<cmd>lua close_hidden_buffers()<cr>', {noremap = true, silent = true})
   end,
