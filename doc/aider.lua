@@ -7,7 +7,7 @@ return {
       default_bindings = true,
       -- You can also set the model to use
       -- model = "claude 3.5", -- or "gpt-3.5-turbo" or any other available model
-      python_env = "~/aider-env/bin/activate" -- Path to your Python environment
+      python_env = "/Users/jefffogarty/.pyenv/versions/3.12.1/bin/python -m env aider" -- Command to start Aider environment
     })
 
     -- Keybindings

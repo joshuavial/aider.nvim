@@ -5,7 +5,7 @@ M.aider_buf = nil
 
 function M.AiderBackground(args, message)
   helpers.showProcessingCue()
-  local command = helpers.build_background_command(args, message)
+  local command = helpers.build_background_command(M.config.python_env, args, message)
   local handle = vim.loop.spawn('bash', {
     args = {'-c', command}
   }, NotifyOnExit)
@@ -26,7 +26,7 @@ function M.AiderOpen(args, window_type)
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
     helpers.open_buffer_in_new_window(window_type, M.aider_buf)
   else
-    command = 'source ~/aider-env/bin/activate && aider ' .. (args or '')
+    command = M.config.python_env .. ' && aider ' .. (args or '')
     helpers.open_window(window_type)
     command = helpers.add_buffers_to_command(command)
     M.aider_job_id = vim.fn.termopen(command, {on_exit = OnExit})
