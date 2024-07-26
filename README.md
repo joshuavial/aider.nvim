@@ -1,3 +1,34 @@
+
+# Aider.nvim
+
+A Neovim plugin for integrating with the Aider AI coding assistant.
+
+## Features
+
+- Open Aider in a new buffer
+- Run Aider in the background
+- Automatically manage context by adding/removing files as buffers are opened/closed
+- Customizable keybindings
+
+## Installation
+
+Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+
+```lua
+{
+  "jtfogarty/aider.nvim",
+  config = function()
+    require('aider').setup({
+      -- Configuration options
+      auto_manage_context = true,
+      default_bindings = true,
+      python_env = "aider_activate &&" -- Command to activate your Aider environment
+    })
+  end,
+}
+
+***************************************************************************************************************************
+
 # Aider Plugin for Neovim
 
 This is a simple plugin for Neovim that allows you to open a terminal window inside Neovim and run [Aider](https://github.com/paul-gauthier/aider). I wrote it as an experiment in using Aider which is by far the best AI coding assistant I've seen, and now just a few keystrokes away in vim.
