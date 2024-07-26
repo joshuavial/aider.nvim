@@ -63,7 +63,7 @@ end
 
 local function build_background_command(args, prompt)
   prompt = prompt or "Complete as many todo items as you can and remove the comment for any item you complete."
-  local command = 'aider --msg "' .. prompt .. '" ' .. (args or '')
+  local command = 'source ~/aider-env/bin/activate && aider --msg "' .. prompt .. '" ' .. (args or '')
   command = add_buffers_to_command(command)
   return command
 end
