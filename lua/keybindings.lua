@@ -13,7 +13,7 @@ wk.register({
 })
 
 -- Set up the actual keybindings
-vim.api.nvim_set_keymap("n", "<leader>Ab", ":AiderBackground<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>AB", ":AiderBackground -3<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>Ao", ":AiderOpen<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>AO", ":AiderOpen -3<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Ab", ":AiderBackground<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>AB", ":AiderBackground -3<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Ao", ":AiderOpen<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>AO", ":AiderOpen -3<CR>i", { noremap = true, silent = true })
