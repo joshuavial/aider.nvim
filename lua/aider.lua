@@ -126,6 +126,11 @@ local function create_commands()
     log("AiderBackground command called with args: " .. (opts.args or "nil"))
     M.AiderBackground(opts.args)
   end, { nargs = "?" })
+
+  vim.api.nvim_create_user_command("AiderAddModifiedFiles", function()
+    log("AiderAddModifiedFiles command called")
+    M.AiderAddModifiedFiles()
+  end, {})
   log("User commands created")
 end
 
