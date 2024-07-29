@@ -67,6 +67,16 @@ function M.AiderOnBufferClose(bufnr)
   end
 end
 
+local function create_commands()
+  vim.api.nvim_create_user_command('AiderOpen', function(opts)
+    M.AiderOpen(opts.args)
+  end, {nargs = '?'})
+
+  vim.api.nvim_create_user_command('AiderBackground', function(opts)
+    M.AiderBackground(opts.args)
+  end, {nargs = '?'})
+end
+
 function M.setup(config)
   M.config = config or {}
   M.config.auto_manage_context = M.config.auto_manage_context or true
@@ -75,14 +85,19 @@ function M.setup(config)
   vim.g.aider_buffer_sync = M.config.auto_manage_context
 
   if M.config.auto_manage_context then
-    vim.api.nvim_command('autocmd BufReadPost * lua AiderOnBufferOpen(vim.fn.expand("<abuf>"))')
-    vim.api.nvim_command('autocmd BufDelete * lua AiderOnBufferClose(vim.fn.expand("<abuf>"))')
-    _G.AiderOnBufferOpen = M.AiderOnBufferOpen
-    _G.AiderOnBufferClose = M.AiderOnBufferClose
+    vim.api.nvim_create_autocmd("BufReadPost", {
+      callback = function(ev)
+        M.AiderOnBufferOpen(ev.buf)
+      end,
+    })
+    vim.api.nvim_create_autocmd("BufDelete", {
+      callback = function(ev)
+        M.AiderOnBufferClose(ev.buf)
+      end,
+    })
   end
 
-  _G.AiderOpen = M.AiderOpen
-  _G.AiderBackground = M.AiderBackground
+  create_commands()
   _G.aider_background_status = 'idle'
 
   if M.config.default_bindings then
