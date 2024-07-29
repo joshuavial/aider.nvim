@@ -3,7 +3,12 @@ local M = {}
 
 M.aider_buf = nil
 
+local function log(message)
+  print(string.format("[Aider Log] %s", message))
+end
+
 function M.AiderBackground(args, message)
+  log("AiderBackground called with args: " .. (args or "nil") .. ", message: " .. (message or "nil"))
   helpers.showProcessingCue()
   local command = helpers.build_background_command(args, message)
   local handle = vim.loop.spawn('bash', {
@@ -22,16 +27,27 @@ function OnExit(code, signal)
 end
 
 function M.AiderOpen(args, window_type)
+  log("AiderOpen called with args: " .. (args or "nil") .. ", window_type: " .. (window_type or "nil"))
   window_type = window_type or 'vsplit'
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
+    log("Existing aider buffer found, opening in new window")
     helpers.open_buffer_in_new_window(window_type, M.aider_buf)
   else
+    log("No existing aider buffer, creating new one")
     command = 'aider ' .. (args or '')
+    log("Opening window with type: " .. window_type)
     helpers.open_window(window_type)
+    log("Adding buffers to command")
     command = helpers.add_buffers_to_command(command)
+    log("Final command: " .. command)
+    log("Opening terminal with command")
     M.aider_job_id = vim.fn.termopen(command, {on_exit = OnExit})
+    log("Terminal opened with job ID: " .. M.aider_job_id)
     M.aider_buf = vim.api.nvim_get_current_buf()
+    log("Set aider_buf to: " .. M.aider_buf)
   end
+  log("AiderOpen completed")
+  vim.fn.input('Press Enter to continue...')
 end
 
 function M.AiderOnBufferOpen(bufnr)
@@ -68,13 +84,17 @@ function M.AiderOnBufferClose(bufnr)
 end
 
 local function create_commands()
+  log("Creating user commands")
   vim.api.nvim_create_user_command('AiderOpen', function(opts)
+    log("AiderOpen command called with args: " .. (opts.args or "nil"))
     M.AiderOpen(opts.args)
   end, {nargs = '?'})
 
   vim.api.nvim_create_user_command('AiderBackground', function(opts)
+    log("AiderBackground command called with args: " .. (opts.args or "nil"))
     M.AiderBackground(opts.args)
   end, {nargs = '?'})
+  log("User commands created")
 end
 
 function M.setup(config)
