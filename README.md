@@ -41,14 +41,6 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 }
 ```
 
-## Configuration
-
-The `setup` function accepts a table with the following options:
-
-- `auto_manage_context` (boolean, default: true): Automatically manage the context of files for Aider.
-- `default_bindings` (boolean, default: true): Use the default key bindings.
-- `debug` (boolean, default: false): Enable debug logging. When set to true, it will print debug information to help troubleshoot issues.
-
 ## Usage
 
 The Aider Plugin for Neovim provides the `AiderOpen` and `AiderBackground` lua functions.
@@ -104,6 +96,7 @@ The Aider Plugin for Neovim provides a `setup` function that you can use to conf
 
 - `auto_manage_context`: A boolean value that determines whether the plugin should automatically manage the context. If set to `true`, the plugin will automatically add and remove buffers from the context as they are opened and closed. Defaults to `true`.
 - `default_bindings`: A boolean value that determines whether the plugin should use the default keybindings. If set to `true`, the plugin will require the keybindings file and set the default keybindings. Defaults to `true`.
+- `debug`: A boolean value that determines whether the plugin should enable debug logging. When set to true, it will print debug information to help troubleshoot issues. Defaults to false.
 
 Here is an example of how to use the `setup` function:
 
@@ -111,6 +104,10 @@ Here is an example of how to use the `setup` function:
 require('aider').setup({
   auto_manage_context = false,
   default_bindings = false
+  debug = true
+
+  -- only necessary if you want to change the default keybindings. <Leader>C is not a particularly good choice. It's just shown as an example.
+  vim.api.nvim_set_keymap('n', '<leader>C', ':AiderOpen<CR>', {noremap = true, silent = true})
 })
 ```
 
@@ -142,20 +139,9 @@ lualine_x = {{
 }
 ```
 
-## Reloading buffers
+## Reloading buffers after Aider updates the underlying code
 
-Because the AiderOnBufferOpen command is bound to BufReadPost it will fire whenever a buffer is reloaded if you just use a `:e!`. The ReloadBuffer function below will prevent a file from being added to aider every time it's openeed.
-
-```lua
-function ReloadBuffer()
-  local temp_sync_value = vim.g.aider_buffer_sync
-  vim.g.aider_buffer_sync = 0
-  vim.api.nvim_exec2('e!', {output = false})
-  vim.g.aider_buffer_sync = temp_sync_value
-end
-```
-
-To use this function, simply call `:lua ReloadBuffer()` (or bind it to your favourite shortcut). This will refresh the current buffer and display any changes made by Aider.
+Run the `:e` command to re-edit the current buffer updating its contents with any changes made since initially loading it.
 
 ## Tips for Working with Buffers in Vim
 
@@ -166,23 +152,6 @@ If you're not familiar with buffers in Vim, here are some tips:
 - Use `:bd` or `:bdelete` to close the current buffer.
 - Use `:bd <number>` or `:bdelete <number>` to close a specific buffer. Replace `<number>` with the buffer number.
 - Use `:bufdo bd` to close all buffers.
-
-This helper function may be useful for closing all buffers that are hidden
-
-```lua
-_G.close_hidden_buffers = function()
-  local curr_buf_num = vim.api.nvim_get_current_buf()
-  local all_buf_nums = vim.api.nvim_list_bufs()
-
-  for _, buf_num in ipairs(all_buf_nums) do
-    if buf_num ~= curr_buf_num and vim.api.nvim_buf_is_valid(buf_num) and vim.api.nvim_buf_is_loaded(buf_num) and vim.fn.bufwinnr(buf_num) == -1 then
-      if vim.fn.getbufvar(buf_num, '&buftype') ~= 'terminal' then
-        vim.api.nvim_buf_delete(buf_num, { force = true })
-      end
-    end
-  end
-end
-```
 
 ## NOTE
 
