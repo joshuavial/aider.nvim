@@ -67,6 +67,9 @@ function M.AiderOpen(args, window_type)
   else
     log("No existing aider buffer, creating new one")
     local command = "aider " .. (args or "")
+    if M.config.vim then
+      command = command .. " --vim"
+    end
     log("Opening window with type: " .. window_type)
     helpers.open_window(window_type)
     log("Adding buffers to command")
@@ -158,6 +161,7 @@ function M.setup(config)
   M.config = config or {}
   M.config.auto_manage_context = M.config.auto_manage_context or true
   M.config.default_bindings = M.config.default_bindings or true
+  M.config.vim = M.config.vim or false
   M.debug = M.config.debug or false
 
   vim.g.aider_buffer_sync = M.config.auto_manage_context
