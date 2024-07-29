@@ -2,6 +2,7 @@ local helpers = require('helpers')
 local M = {}
 
 M.aider_buf = nil
+M.debug = false
 
 local function is_valid_buffer(bufnr)
   local bufname = vim.api.nvim_buf_get_name(bufnr)
@@ -22,7 +23,9 @@ local function is_valid_buffer(bufnr)
 end
 
 local function log(message)
-  print(string.format("[Aider Log] %s", message))
+  if M.debug then
+    print(string.format("[Aider Log] %s", message))
+  end
 end
 
 function M.AiderBackground(args, message)
@@ -123,6 +126,7 @@ function M.setup(config)
   M.config = config or {}
   M.config.auto_manage_context = M.config.auto_manage_context or true
   M.config.default_bindings = M.config.default_bindings or true
+  M.debug = M.config.debug or false
 
   vim.g.aider_buffer_sync = M.config.auto_manage_context
 
@@ -145,6 +149,8 @@ function M.setup(config)
   if M.config.default_bindings then
     require('keybindings')
   end
+
+  log("Aider setup completed with debug mode: " .. tostring(M.debug))
 end
 
 return M

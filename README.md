@@ -161,3 +161,51 @@ end
 
 if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
 
+# Aider.nvim
+
+Aider.nvim is a Neovim plugin that integrates the Aider AI coding assistant into your Neovim workflow.
+
+## Installation
+
+### Using [lazy.nvim](https://github.com/folke/lazy.nvim)
+
+Add the following to your Neovim configuration:
+
+```lua
+{
+  "joshuavial/aider.nvim",
+  config = function()
+    require("aider").setup({
+      -- your configuration comes here
+      -- if you don't want to use the default settings
+      auto_manage_context = true,
+      default_bindings = true,
+      debug = false, -- Set to true to enable debug logging
+    })
+  end,
+}
+```
+
+## Configuration
+
+The `setup` function accepts a table with the following options:
+
+- `auto_manage_context` (boolean, default: true): Automatically manage the context of files for Aider.
+- `default_bindings` (boolean, default: true): Use the default key bindings.
+- `debug` (boolean, default: false): Enable debug logging. When set to true, it will print debug information to help troubleshoot issues.
+
+## Usage
+
+[Add usage instructions here]
+
+## Key Bindings
+
+[Add key binding information here]
+
+## Contributing
+
+[Add contribution guidelines here]
+
+## License
+
+[Add license information here]
