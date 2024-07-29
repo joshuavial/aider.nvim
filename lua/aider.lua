@@ -36,11 +36,14 @@ function M.AiderBackground(args, message)
 end
 
 
-function OnExit(code, signal)
-  if M.aider_buf then
-    vim.api.nvim_command('bd! ' .. M.aider_buf)
-    M.aider_buf = nil
-  end
+local function OnExit(job_id, exit_code, event_type)
+  vim.schedule(function()
+    if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
+      vim.api.nvim_buf_set_option(M.aider_buf, 'modifiable', true)
+      vim.api.nvim_buf_set_lines(M.aider_buf, -1, -1, false, {"", "Aider process exited with code: " .. exit_code})
+      vim.api.nvim_buf_set_option(M.aider_buf, 'modifiable', false)
+    end
+  end)
 end
 
 function M.AiderOpen(args, window_type)
@@ -51,21 +54,21 @@ function M.AiderOpen(args, window_type)
     helpers.open_buffer_in_new_window(window_type, M.aider_buf)
   else
     log("No existing aider buffer, creating new one")
-    command = 'aider ' .. (args or '')
+    local command = 'aider ' .. (args or '')
     log("Opening window with type: " .. window_type)
     helpers.open_window(window_type)
     log("Adding buffers to command")
     command = helpers.add_buffers_to_command(command, is_valid_buffer)
     log("Final command: " .. command)
     log("Opening terminal with command")
+    M.aider_buf = vim.api.nvim_get_current_buf()
     M.aider_job_id = vim.fn.termopen(command, {on_exit = OnExit})
     log("Terminal opened with job ID: " .. M.aider_job_id)
-    M.aider_buf = vim.api.nvim_get_current_buf()
     log("Set aider_buf to: " .. M.aider_buf)
+    vim.api.nvim_buf_set_option(M.aider_buf, 'bufhidden', 'hide')
   end
   log("AiderOpen completed")
   log("Final aider_buf: " .. (M.aider_buf or "nil"))
-  vim.fn.input('Press Enter to continue...')
 end
 
 
