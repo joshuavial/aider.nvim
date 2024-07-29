@@ -24,17 +24,44 @@ Using [dein](https://github.com/Shougo/dein.vim)
 call dein#add('joshuavial/aider.nvim')
 ```
 
+Using [lazy.nvim](https://github.com/folke/lazy.nvim)
+
+```lua
+{
+  "joshuavial/aider.nvim",
+  config = function()
+    require("aider").setup({
+      -- your configuration comes here
+      -- if you don't want to use the default settings
+      auto_manage_context = true,
+      default_bindings = true,
+      debug = false, -- Set to true to enable debug logging
+    })
+  end,
+}
+```
+
+## Configuration
+
+The `setup` function accepts a table with the following options:
+
+- `auto_manage_context` (boolean, default: true): Automatically manage the context of files for Aider.
+- `default_bindings` (boolean, default: true): Use the default key bindings.
+- `debug` (boolean, default: false): Enable debug logging. When set to true, it will print debug information to help troubleshoot issues.
+
 ## Usage
 
-The Aider Plugin for Neovim provides the `AiderOpen` and `AiderBackground` lua functions. 
+The Aider Plugin for Neovim provides the `AiderOpen` and `AiderBackground` lua functions.
 
 The `AiderOpen` function opens a terminal window with the Aider command. It accepts the following arguments:
+
 - `args`: The command line arguments to pass to `aider` - defaults to ""
 - `window_type`: The window style to use 'vsplit' (default), 'hsplit' or 'editor'
 
 NOTE: if an Aider job is already running calling AiderOpen will reattach to it, even if it is called with different flags
 
 The `AiderBackground` function runs the Aider command in the background. It accepts the following arguments:
+
 - `args`: The command line arguments to pass to `aider` - defaults to ""
 - `message`: The message to pass to the Aider command - defaults to "Complete as many todo items as you can and remove the comment for any item you complete."
 
@@ -50,8 +77,6 @@ Here are some examples of how to use the `AiderOpen` and `AiderBackground` comma
 :AiderBackground -3
 :AiderBackground "AIDER_NO_AUTO_COMMITS=1 aider -3"
 ```
-
-These commands can be used directly in Neovim's command mode without the need for the `:lua` prefix.
 
 You can also set custom keybindings for the `AiderOpen` and `AiderBackground` commands in your Neovim configuration. Here's an example:
 
@@ -97,20 +122,20 @@ The plugin exposes a global variable called `aider_background_status` that you c
 
 ```lua
 lualine_x = {{
-    function() 
+    function()
       return 'A'
     end,
     color = { fg = '#8FBCBB' }, -- green
-    cond = function() 
+    cond = function()
       return _G.aider_background_status == 'idle'
     end
   },
   {
-    function() 
+    function()
       return 'A'
     end,
     color = { fg = '#BF616A' }, -- red
-    cond = function() 
+    cond = function()
       return _G.aider_background_status == 'working'
     end
   }
@@ -123,8 +148,8 @@ Because the AiderOnBufferOpen command is bound to BufReadPost it will fire whene
 
 ```lua
 function ReloadBuffer()
-  local temp_sync_value = vim.g.aider_buffer_sync                            
-  vim.g.aider_buffer_sync = 0                                                
+  local temp_sync_value = vim.g.aider_buffer_sync
+  vim.g.aider_buffer_sync = 0
   vim.api.nvim_exec2('e!', {output = false})
   vim.g.aider_buffer_sync = temp_sync_value
 end
@@ -162,52 +187,3 @@ end
 ## NOTE
 
 if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
-
-# Aider.nvim
-
-Aider.nvim is a Neovim plugin that integrates the Aider AI coding assistant into your Neovim workflow.
-
-## Installation
-
-### Using [lazy.nvim](https://github.com/folke/lazy.nvim)
-
-Add the following to your Neovim configuration:
-
-```lua
-{
-  "joshuavial/aider.nvim",
-  config = function()
-    require("aider").setup({
-      -- your configuration comes here
-      -- if you don't want to use the default settings
-      auto_manage_context = true,
-      default_bindings = true,
-      debug = false, -- Set to true to enable debug logging
-    })
-  end,
-}
-```
-
-## Configuration
-
-The `setup` function accepts a table with the following options:
-
-- `auto_manage_context` (boolean, default: true): Automatically manage the context of files for Aider.
-- `default_bindings` (boolean, default: true): Use the default key bindings.
-- `debug` (boolean, default: false): Enable debug logging. When set to true, it will print debug information to help troubleshoot issues.
-
-## Usage
-
-[Add usage instructions here]
-
-## Key Bindings
-
-[Add key binding information here]
-
-## Contributing
-
-[Add contribution guidelines here]
-
-## License
-
-[Add license information here]
