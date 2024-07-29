@@ -51,16 +51,32 @@ function M.AiderOpen(args, window_type)
   vim.fn.input('Press Enter to continue...')
 end
 
+local function is_valid_buffer(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
+  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+
+  -- Ignore special buffers
+  if buftype ~= '' or
+     filetype == 'NvimTree' or
+     filetype == 'neo-tree' or
+     bufname:match('^term://') or
+     not vim.fn.filereadable(bufname) then
+    return false
+  end
+
+  return true
+end
+
 function M.AiderOnBufferOpen(bufnr)
   if not vim.g.aider_buffer_sync or vim.g.aider_buffer_sync == 0 then
     return
   end
   bufnr = tonumber(bufnr)
-  local bufname = vim.api.nvim_buf_get_name(bufnr)
-  local buftype = vim.fn.getbufvar(bufnr, '&buftype') 
-  if not bufname or bufname:match('^term://') or buftype == 'terminal' then
+  if not is_valid_buffer(bufnr) then
     return
   end
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
   local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
     local line_to_add = '/add ' .. relative_filename
@@ -73,10 +89,10 @@ function M.AiderOnBufferClose(bufnr)
     return
   end
   bufnr = tonumber(bufnr)
-  local bufname = vim.api.nvim_buf_get_name(bufnr)
-  if not bufname or bufname:match('^term://') then
+  if not is_valid_buffer(bufnr) then
     return
   end
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
   local relative_filename = vim.fn.fnamemodify(bufname, ':~:.')
   if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
     local line_to_drop = '/drop ' .. relative_filename
