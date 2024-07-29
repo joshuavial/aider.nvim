@@ -43,23 +43,25 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ## Usage
 
-The Aider Plugin for Neovim provides the `AiderOpen` and `AiderBackground` lua functions.
+The Aider Plugin for Neovim provides several functions and commands:
 
-The `AiderOpen` function opens a terminal window with the Aider command. It accepts the following arguments:
+1. `AiderOpen`: Opens a terminal window with the Aider command.
+   - Arguments:
+     - `args`: Command line arguments to pass to `aider` (default: "")
+     - `window_type`: Window style to use ('vsplit' (default), 'hsplit', or 'editor')
+   - Note: If an Aider job is already running, calling AiderOpen will reattach to it, even with different flags.
 
-- `args`: The command line arguments to pass to `aider` - defaults to ""
-- `window_type`: The window style to use 'vsplit' (default), 'hsplit' or 'editor'
+2. `AiderBackground`: Runs the Aider command in the background.
+   - Arguments:
+     - `args`: Command line arguments to pass to `aider` (default: "")
+     - `message`: Message to pass to the Aider command (default: "Complete as many todo items as you can and remove the comment for any item you complete.")
 
-NOTE: if an Aider job is already running calling AiderOpen will reattach to it, even if it is called with different flags
+3. `AiderAddModifiedFiles`: Adds all git-modified files to the Aider chat.
+   - This function can be called directly or through the user command `:AiderAddModifiedFiles`
 
-The `AiderBackground` function runs the Aider command in the background. It accepts the following arguments:
+When Aider opens (through either function), it automatically adds all open buffers to both commands. It's recommended to actively manage open buffers with commands like `:ls` and `:bd`.
 
-- `args`: The command line arguments to pass to `aider` - defaults to ""
-- `message`: The message to pass to the Aider command - defaults to "Complete as many todo items as you can and remove the comment for any item you complete."
-
-When Aider opens (through either function), it will automatically add all open buffers to both commands. If you are going to use this plugin you will want to actively manage open buffers with commands like `:ls` and `:bd`.
-
-Here are some examples of how to use the `AiderOpen` and `AiderBackground` commands:
+Examples of using these commands:
 
 ```vim
 :AiderOpen
@@ -68,25 +70,26 @@ Here are some examples of how to use the `AiderOpen` and `AiderBackground` comma
 :AiderBackground
 :AiderBackground -3
 :AiderBackground "AIDER_NO_AUTO_COMMITS=1 aider -3"
+:AiderAddModifiedFiles
 ```
 
-You can also set custom keybindings for the `AiderOpen` and `AiderBackground` commands in your Neovim configuration. Here's an example:
+You can set custom keybindings for these commands in your Neovim configuration. For example:
 
 ```lua
 vim.api.nvim_set_keymap('n', '<leader>ao', ':AiderOpen<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>ab', ':AiderBackground<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>am', ':AiderAddModifiedFiles<CR>', {noremap = true, silent = true})
 ```
 
-In this example, pressing `<leader>ao` in normal mode will call the `AiderOpen` command, and `<leader>ab` will call the `AiderBackground` command.
-
-Run `aider --help` to see all the options you can pass to the cli.
+Run `aider --help` to see all the options you can pass to the CLI.
 
 The plugin provides the following default keybindings:
 
-- `<leader>Ao` to open a terminal window with the Aider defaults (gpt-4).
-- `<leader>AO` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
-- `<leader>Ab` to run the Aider command in the background with the defaults.
-- `<leader>AB` to run the Aider command in the background using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Ao`: Open a terminal window with the Aider defaults (gpt-4).
+- `<leader>AO`: Open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Ab`: Run the Aider command in the background with the defaults.
+- `<leader>AB`: Run the Aider command in the background using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Am`: Add all git-modified files to the Aider chat.
 
 These keybindings are set up using which-key, providing a descriptive popup menu when you press `<leader>A`.
 
