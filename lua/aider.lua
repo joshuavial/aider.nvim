@@ -44,9 +44,16 @@ local function OnExit(job_id, exit_code, event_type)
   vim.schedule(function()
     if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
       vim.api.nvim_buf_set_option(M.aider_buf, 'modifiable', true)
-      vim.api.nvim_buf_set_lines(M.aider_buf, -1, -1, false, {"", "Aider process exited with code: " .. exit_code})
+      local message
+      if exit_code == 0 then
+        message = "Aider process completed successfully."
+      else
+        message = "Aider process exited with code: " .. exit_code
+      end
+      vim.api.nvim_buf_set_lines(M.aider_buf, -1, -1, false, {"", message})
       vim.api.nvim_buf_set_option(M.aider_buf, 'modifiable', false)
     end
+    log("Aider process exited with code: " .. exit_code)
   end)
 end
 
