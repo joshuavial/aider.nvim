@@ -14,8 +14,8 @@ wk.register({
 })
 
 -- Set up the actual keybindings
-vim.api.nvim_set_keymap("n", "<leader>Ab", ":AiderBackground<CR>i", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>AB", ":AiderBackground -3<CR>i", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>Ao", ":AiderOpen<CR>i", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>AO", ":AiderOpen -3<CR>i", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>Am", ":AiderAddModifiedFiles<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Ab", "<CMD>AiderBackground<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>AB", "<CMD>AiderBackground -3<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Ao", "<CMD>AiderOpen<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>AO", "<CMD>AiderOpen -3<CR>i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Am", "<CMD>AiderAddModifiedFiles<CR>i", { noremap = true, silent = true })
