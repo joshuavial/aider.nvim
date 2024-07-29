@@ -49,7 +49,7 @@ local function showProcessingCue()
 end
 
 
-local function add_buffers_to_command(command)
+local function add_buffers_to_command(command, is_valid_buffer)
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
     if vim.api.nvim_buf_is_loaded(buf) and is_valid_buffer(buf) then
