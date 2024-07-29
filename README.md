@@ -46,12 +46,14 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 The Aider Plugin for Neovim provides several functions and commands:
 
 1. `AiderOpen`: Opens a terminal window with the Aider command.
+
    - Arguments:
      - `args`: Command line arguments to pass to `aider` (default: "")
      - `window_type`: Window style to use ('vsplit' (default), 'hsplit', or 'editor')
    - Note: If an Aider job is already running, calling AiderOpen will reattach to it, even with different flags.
 
 2. `AiderBackground`: Runs the Aider command in the background.
+
    - Arguments:
      - `args`: Command line arguments to pass to `aider` (default: "")
      - `message`: Message to pass to the Aider command (default: "Complete as many todo items as you can and remove the comment for any item you complete.")
@@ -106,8 +108,9 @@ Here is an example of how to use the `setup` function:
 ```lua
 require('aider').setup({
   auto_manage_context = false,
-  default_bindings = false
-  debug = true
+  default_bindings = false,
+  debug = true,
+  vim = true, -- Pass the `--vim` flag to Aider when opening a new chat
 
   -- only necessary if you want to change the default keybindings. <Leader>C is not a particularly good choice. It's just shown as an example.
   vim.api.nvim_set_keymap('n', '<leader>C', ':AiderOpen<CR>', {noremap = true, silent = true})
