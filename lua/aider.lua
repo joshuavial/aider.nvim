@@ -136,16 +136,22 @@ end
 
 function M.AiderAddModifiedFiles()
   log("AiderAddModifiedFiles called")
-  if M.aider_buf and vim.api.nvim_buf_is_valid(M.aider_buf) then
-    local modified_files = helpers.get_git_modified_files()
-    for _, file in ipairs(modified_files) do
-      local line_to_add = "/add " .. file
-      vim.fn.chansend(M.aider_job_id, line_to_add .. "\n")
-    end
-    vim.notify("Added " .. #modified_files .. " modified files to Aider chat")
-  else
-    vim.notify("Aider chat is not open", vim.log.levels.WARN)
+  if not M.aider_buf or not vim.api.nvim_buf_is_valid(M.aider_buf) then
+    log("Aider chat not open, opening it first")
+    M.AiderOpen()
+    -- Wait a bit for the Aider chat to initialize
+    vim.defer_fn(function()
+      M.AiderAddModifiedFiles()
+    end, 1000)
+    return
   end
+  
+  local modified_files = helpers.get_git_modified_files()
+  for _, file in ipairs(modified_files) do
+    local line_to_add = "/add " .. file
+    vim.fn.chansend(M.aider_job_id, line_to_add .. "\n")
+  end
+  vim.notify("Added " .. #modified_files .. " modified files to Aider chat")
 end
 
 function M.setup(config)
