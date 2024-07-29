@@ -40,36 +40,38 @@ The `AiderBackground` function runs the Aider command in the background. It acce
 
 When Aider opens (through either function), it will automatically add all open buffers to both commands. If you are going to use this plugin you will want to actively manage open buffers with commands like `:ls` and `:bd`.
 
-Here are some examples of how to use the `AiderOpen` and `AiderBackground` functions:
+Here are some examples of how to use the `AiderOpen` and `AiderBackground` commands:
 
 ```vim
-:lua AiderOpen() 
-:lua AiderOpen("-3", "hsplit") 
-:lua AiderOpen("AIDER_NO_AUTO_COMMITS=1 aider -3", "editor")
-:lua AiderBackground()
-:lua AiderBackground("-3")
-:lua AiderBackground("AIDER_NO_AUTO_COMMITS=1 aider -3")
+:AiderOpen
+:AiderOpen -3 hsplit
+:AiderOpen "AIDER_NO_AUTO_COMMITS=1 aider -3" editor
+:AiderBackground
+:AiderBackground -3
+:AiderBackground "AIDER_NO_AUTO_COMMITS=1 aider -3"
 ```
 
-You can also set keybindings for the `AiderOpen` and `AiderBackground` functions in Lua. Here's an example:
+These commands can be used directly in Neovim's command mode without the need for the `:lua` prefix.
+
+You can also set custom keybindings for the `AiderOpen` and `AiderBackground` commands in your Neovim configuration. Here's an example:
 
 ```lua
--- set a keybinding for the AiderOpen function
-vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua AiderOpen()<cr>', {noremap = true, silent = true})
--- set a keybinding for the AiderBackground function
-vim.api.nvim_set_keymap('n', '<leader>ob', '<cmd>lua AiderBackground()<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>ao', ':AiderOpen<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>ab', ':AiderBackground<CR>', {noremap = true, silent = true})
 ```
 
-In this example, pressing `<leader>oa` in normal mode will call the `AiderOpen` function, and `<leader>ob` will call the `AiderBackground` function.
+In this example, pressing `<leader>ao` in normal mode will call the `AiderOpen` command, and `<leader>ab` will call the `AiderBackground` command.
 
 Run `aider --help` to see all the options you can pass to the cli.
 
 The plugin provides the following default keybindings:
 
-- `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
-- `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
-- `<leader><space>b` to run the Aider command in the background with the defaults.
-- `<leader><space>b3` to run the Aider command in the background using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Ao` to open a terminal window with the Aider defaults (gpt-4).
+- `<leader>AO` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Ab` to run the Aider command in the background with the defaults.
+- `<leader>AB` to run the Aider command in the background using the gpt-3.5-turbo-16k model for chat.
+
+These keybindings are set up using which-key, providing a descriptive popup menu when you press `<leader>A`.
 
 ## Setup
 
