@@ -47,6 +47,7 @@ function M.AiderOpen(args, window_type)
     log("Set aider_buf to: " .. M.aider_buf)
   end
   log("AiderOpen completed")
+  log("Final aider_buf: " .. (M.aider_buf or "nil"))
   vim.fn.input('Press Enter to continue...')
 end
 
