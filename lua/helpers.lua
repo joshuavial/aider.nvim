@@ -48,14 +48,29 @@ local function showProcessingCue()
   set_idle_status(false)
 end
 
+local function is_valid_buffer(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
+  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+
+  -- Ignore special buffers
+  if buftype ~= '' or
+     filetype == 'NvimTree' or
+     filetype == 'neo-tree' or
+     bufname:match('^term://') or
+     not vim.fn.filereadable(bufname) then
+    return false
+  end
+
+  return true
+end
+
 local function add_buffers_to_command(command)
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
-    if vim.api.nvim_buf_is_loaded(buf) then
+    if vim.api.nvim_buf_is_loaded(buf) and is_valid_buffer(buf) then
       local bufname = vim.api.nvim_buf_get_name(buf)
-      if not bufname:match('^term:') and not bufname:match('NeogitConsole') then
-        command = command .. " " .. bufname
-      end
+      command = command .. " " .. vim.fn.shellescape(bufname)
     end
   end
   return command
