@@ -3,6 +3,23 @@ local M = {}
 
 M.aider_buf = nil
 
+local function is_valid_buffer(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
+  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+
+  -- Ignore special buffers
+  if buftype ~= '' or
+     filetype == 'NvimTree' or
+     filetype == 'neo-tree' or
+     bufname:match('^term://') or
+     not vim.fn.filereadable(bufname) then
+    return false
+  end
+
+  return true
+end
+
 local function log(message)
   print(string.format("[Aider Log] %s", message))
 end
