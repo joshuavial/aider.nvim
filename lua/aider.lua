@@ -8,12 +8,13 @@ local function is_valid_buffer(bufnr)
   local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
   local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
 
-  -- Ignore special buffers
+  -- Ignore special buffers and directories
   if buftype ~= '' or
      filetype == 'NvimTree' or
      filetype == 'neo-tree' or
      bufname:match('^term://') or
-     not vim.fn.filereadable(bufname) then
+     not vim.fn.filereadable(bufname) or
+     vim.fn.isdirectory(bufname) == 1 then
     return false
   end
 

@@ -54,7 +54,9 @@ local function add_buffers_to_command(command, is_valid_buffer)
   for _, buf in ipairs(buffers) do
     if vim.api.nvim_buf_is_loaded(buf) and is_valid_buffer(buf) then
       local bufname = vim.api.nvim_buf_get_name(buf)
-      command = command .. " " .. vim.fn.shellescape(bufname)
+      if vim.fn.filereadable(bufname) == 1 then
+        command = command .. " " .. vim.fn.shellescape(bufname)
+      end
     end
   end
   return command
