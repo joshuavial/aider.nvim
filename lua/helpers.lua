@@ -80,11 +80,23 @@ function open_buffer_in_new_window(window_type, aider_buf)
 end
 
 
+local function get_git_modified_files()
+  local handle = io.popen("git ls-files --modified --others --exclude-standard")
+  local result = handle:read("*a")
+  handle:close()
+  local files = {}
+  for file in result:gmatch("[^\r\n]+") do
+    table.insert(files, file)
+  end
+  return files
+end
+
 return {
   open_window = open_window,
   NotifyOnExit = NotifyOnExit,
   showProcessingCue = showProcessingCue,
   add_buffers_to_command = add_buffers_to_command,
   build_background_command = build_background_command,
-  open_buffer_in_new_window = open_buffer_in_new_window
+  open_buffer_in_new_window = open_buffer_in_new_window,
+  get_git_modified_files = get_git_modified_files
 }
