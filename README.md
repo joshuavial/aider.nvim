@@ -161,3 +161,8 @@ end
 
 if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
 
+# `diff nekowasabi/aider.vim`
+// TODO: State differences
+
+# `diff GeorgesAlkhouri/nvim-aider`
+// TODO: State differences
