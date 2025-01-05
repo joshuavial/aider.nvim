@@ -129,3 +129,7 @@ If you're not familiar with buffers in Vim, here are some tips:
 ## NOTE
 
 if you resize a split the nvim buffer can truncate the text output, chatGPT tells me there isn't an easy work around for this. Feel free to make a PR if you think it's easy to solve without rearchitecting and using tmux or something similar.
+
+## Other Aider Neovim plugins
+[nekowasabi/aider.vim](https://github.com/nekowasabi/aider.vim)
+[GeorgesAlkhouri/nvim-aider](https://github.com/GeorgesAlkhouri/nvim-aider)`
