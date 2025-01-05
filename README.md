@@ -78,6 +78,7 @@ The plugin provides the following default keybindings:
 
 - `<leader>Ao`: Open a terminal window with the Aider defaults (gpt-4).
 - `<leader>Am`: Add all git-modified files to the Aider chat.
+- `<leader><space>`: Open Aider (Deprecated - will be removed in a future version)
 
 These keybindings are set up using which-key, providing a descriptive popup menu when you press `<leader>A`.
 
@@ -88,7 +89,6 @@ The Aider Plugin for Neovim provides a `setup` function that you can use to conf
 - `auto_manage_context`: A boolean value that determines whether the plugin should automatically manage the context. If set to `true`, the plugin will automatically add and remove buffers from the context as they are opened and closed. Defaults to `true`.
 - `default_bindings`: A boolean value that determines whether the plugin should use the default keybindings. If set to `true`, the plugin will require the keybindings file and set the default keybindings. Defaults to `true`.
 - `debug`: A boolean value that determines whether the plugin should enable debug logging. When set to true, it will print debug information to help troubleshoot issues. Defaults to false.
-- vim: pass the --vim flag to aider when opening a new chat
 - `ignore_buffers`: A list of matching patterns for buffer names that will be ignored. Defaults to `{'^term:', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'}`.
 
 Here is an example of how to use the `setup` function:

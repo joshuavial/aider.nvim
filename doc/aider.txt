@@ -41,6 +41,7 @@ The plugin provides the following default keybindings:
 
 - `<leader>Ao` to open a terminal window with the Aider defaults (gpt-4).
 - `<leader>Am` to add all git-modified files to the Aider chat.
+- `<leader><space>` to open Aider (Deprecated - will be removed in a future version)
 
 They can be disabled by setting the `default_bindings` option to `false` in the setup config.
 
