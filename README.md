@@ -35,7 +35,6 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
     auto_manage_context = true, -- automatically manage buffer context
     default_bindings = true,    -- use default <leader>A keybindings
     debug = false,              -- enable debug logging
-    vim = false                 -- pass --vim flag to aider
   },
 }
 ```
