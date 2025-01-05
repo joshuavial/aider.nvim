@@ -26,6 +26,7 @@ call dein#add('joshuavial/aider.nvim')
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
+
 ```lua
 {
   "joshuavial/aider.nvim",

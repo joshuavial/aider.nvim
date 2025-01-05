@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2025-01-05
+
+### Added
+- Lazy.nvim compatibility (@jondkinney)
+- Change default bindings to A prefix (@jondkinney)
+- Debug logging system with configurable debug mode(@jondkinney)
+- More robust buffer validation with `is_valid_buffer()` function (@jondkinney)
+- Better handling of special buffers and directories (@jondkinney)
+
 ## [0.3.1] - 2023-10-22
 
 ### Fixed
