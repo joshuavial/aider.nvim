@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2025-01-06
+- removed the vim config flag (it's trival for users to add it with a keybinding)
+- put deprecation warning for <leader><space> keybinding
+
 ## [0.4.0] - 2025-01-05
 
 ### Fixed

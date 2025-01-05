@@ -62,9 +62,6 @@ function M.AiderOpen(args, window_type)
   else
     log("No existing aider buffer, creating new one")
     local command = "aider " .. (args or "")
-    if M.config.vim then
-      command = command .. " --vim"
-    end
     log("Opening window with type: " .. window_type)
     helpers.open_window(window_type)
     log("Adding buffers to command")
@@ -152,7 +149,6 @@ function M.setup(config)
   M.config = {
     auto_manage_context = true,
     default_bindings = true,
-    vim = false,
     debug = false,
     ignore_buffers = {'^term://', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'},
   }

@@ -42,4 +42,9 @@ else
 		{ desc = "Add Modified Files to Chat" }
 	)
 	vim.keymap.set("n", "<leader>Ao", aider_command_and_insert("AiderOpen"), { desc = "Open Aider" })
+	-- Deprecated: Will be removed in future version
+	vim.keymap.set("n", "<leader><space>", function()
+		vim.notify("Warning: <leader><space> binding for Aider is deprecated and will be removed in a future version. Please use <leader>Ao or setup your own keybinding instead.", vim.log.levels.WARN)
+		aider_command_and_insert("AiderOpen")()
+	end, { desc = "Open Aider (Deprecated)" })
 end
