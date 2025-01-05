@@ -53,7 +53,6 @@ local function add_buffers_to_command(command, is_valid_buffer)
 	return command
 end
 
-
 function open_buffer_in_new_window(window_type, aider_buf)
 	if window_type == "vsplit" then
 		vim.api.nvim_command("vsplit | buffer " .. aider_buf)

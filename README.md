@@ -91,6 +91,8 @@ The Aider Plugin for Neovim provides a `setup` function that you can use to conf
 - `auto_manage_context`: A boolean value that determines whether the plugin should automatically manage the context. If set to `true`, the plugin will automatically add and remove buffers from the context as they are opened and closed. Defaults to `true`.
 - `default_bindings`: A boolean value that determines whether the plugin should use the default keybindings. If set to `true`, the plugin will require the keybindings file and set the default keybindings. Defaults to `true`.
 - `debug`: A boolean value that determines whether the plugin should enable debug logging. When set to true, it will print debug information to help troubleshoot issues. Defaults to false.
+- vim: pass the --vim flag to aider when opening a new chat
+- `ignore_buffers`: A list of matching patterns for buffer names that will be ignored. Defaults to `{'^term:', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'}`.
 
 Here is an example of how to use the `setup` function:
 
@@ -99,10 +101,11 @@ require('aider').setup({
   auto_manage_context = false,
   default_bindings = false,
   debug = true,
-  vim = true, -- Pass the `--vim` flag to Aider when opening a new chat
+  vim = true, 
+  ignore_buffers = {},
 
   -- only necessary if you want to change the default keybindings. <Leader>C is not a particularly good choice. It's just shown as an example.
-  vim.api.nvim_set_keymap('n', '<leader>C', ':AiderOpen<CR>', {noremap = true, silent = true})
+  vim.api.nvim_set_keymap('n', '<leader>C', ':AiderOpen --no-auto-commits<CR>', {noremap = true, silent = true})
 })
 ```
 

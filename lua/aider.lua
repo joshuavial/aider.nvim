@@ -14,11 +14,16 @@ local function is_valid_buffer(bufnr)
       buftype ~= ""
       or filetype == "NvimTree"
       or filetype == "neo-tree"
-      or bufname:match("^term://")
       or not vim.fn.filereadable(bufname)
       or vim.fn.isdirectory(bufname) == 1
   then
     return false
+  end
+
+  for _, ignore_buf in ipairs(M.config.ignore_buffers or {}) do
+    if bufname:match(ignore_buf) then
+      return false
+    end
   end
 
   return true
@@ -149,6 +154,7 @@ function M.setup(config)
     default_bindings = true,
     vim = false,
     debug = false,
+    ignore_buffers = {'^term://', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'},
   }
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
 
