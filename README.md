@@ -79,7 +79,6 @@ Run `aider --help` to see all the options you can pass to the CLI.
 The plugin provides the following default keybindings:
 
 - `<leader>Ao`: Open a terminal window with the Aider defaults (gpt-4).
-- `<leader>AO`: Open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
 - `<leader>Am`: Add all git-modified files to the Aider chat.
 
 These keybindings are set up using which-key, providing a descriptive popup menu when you press `<leader>A`.

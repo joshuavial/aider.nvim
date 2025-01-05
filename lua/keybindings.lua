@@ -21,12 +21,6 @@ if use_which_key then
 			group = "Aider",
 		},
 		{
-			"<leader>AO",
-			"<CMD>AiderOpen -3<CR>",
-			desc = "Open Aider (GPT-3.5)",
-			mode = "n",
-		},
-		{
 			"<leader>Am",
 			"<CMD>AiderAddModifiedFiles<CR>",
 			desc = "Add Modified Files to Chat",
@@ -41,7 +35,6 @@ if use_which_key then
 	})
 else
 	-- Set up the actual keybindings when which-key is not available
-	vim.keymap.set("n", "<leader>AO", aider_command_and_insert("AiderOpen -3"), { desc = "Open Aider (GPT-3.5)" })
 	vim.keymap.set(
 		"n",
 		"<leader>Am",
