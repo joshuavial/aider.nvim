@@ -144,11 +144,13 @@ function M.AiderAddModifiedFiles()
 end
 
 function M.setup(config)
-  M.config = config or {}
-  M.config.auto_manage_context = M.config.auto_manage_context or true
-  M.config.default_bindings = M.config.default_bindings or true
-  M.config.vim = M.config.vim or false
-  M.debug = M.config.debug or false
+  M.config = {
+    auto_manage_context = true,
+    default_bindings = true,
+    vim = false,
+    debug = false,
+  }
+  M.config = vim.tbl_deep_extend('force', M.config, config or {})
 
   vim.g.aider_buffer_sync = M.config.auto_manage_context
 

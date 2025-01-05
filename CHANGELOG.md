@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [0.4.0] - 2025-01-05
 
+### Fixed
+- custom config being ignored (@valentino-sm)
+
 ### Added
 - Lazy.nvim compatibility (@jondkinney)
 - Change default bindings to A prefix (@jondkinney)
