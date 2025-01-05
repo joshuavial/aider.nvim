@@ -11,7 +11,6 @@ All notable changes to this project will be documented in this file.
 - Lazy.nvim compatibility (@jondkinney)
 - Change default bindings to A prefix (@jondkinney)
 - Debug logging system with configurable debug mode(@jondkinney)
-- More robust buffer validation with `is_valid_buffer()` function (@jondkinney)
 - Better handling of special buffers and directories (@jondkinney)
 - New config option to customise buffers to ignore (@valentino-sm)
 
