@@ -30,16 +30,6 @@ local function log(message)
   end
 end
 
-function M.AiderBackground(args, message)
-  log("AiderBackground called with args: " .. (args or "nil") .. ", message: " .. (message or "nil"))
-  helpers.showProcessingCue()
-  local command = helpers.build_background_command(args, message)
-  local handle = vim.loop.spawn("bash", {
-    args = { "-c", command },
-  }, NotifyOnExit)
-
-  vim.notify("Aider started " .. (args or ""))
-end
 
 local function OnExit(job_id, exit_code, event_type)
   vim.schedule(function()
@@ -125,10 +115,6 @@ local function create_commands()
     M.AiderOpen(opts.args)
   end, { nargs = "?" })
 
-  vim.api.nvim_create_user_command("AiderBackground", function(opts)
-    log("AiderBackground command called with args: " .. (opts.args or "nil"))
-    M.AiderBackground(opts.args)
-  end, { nargs = "?" })
 
   vim.api.nvim_create_user_command("AiderAddModifiedFiles", function()
     log("AiderAddModifiedFiles command called")
@@ -180,7 +166,6 @@ function M.setup(config)
   end
 
   create_commands()
-  _G.aider_background_status = "idle"
 
   if M.config.default_bindings then
     require("keybindings")

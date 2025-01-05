@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
 - More robust buffer validation with `is_valid_buffer()` function (@jondkinney)
 - Better handling of special buffers and directories (@jondkinney)
 
+### Removed
+- AiderBackground command (`aider --watch-files` replaces functionality)
+
 ## [0.3.1] - 2023-10-22
 
 ### Fixed

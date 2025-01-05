@@ -1,11 +1,3 @@
-local function set_idle_status(isIdle)
-	if isIdle then
-		_G.aider_background_status = "idle"
-	else
-		_G.aider_background_status = "working"
-	end
-	vim.cmd("redrawstatus")
-end
 
 local function open_vsplit_window()
 	vim.api.nvim_command("vnew")
@@ -47,10 +39,6 @@ function NotifyOnExit(code, signal)
 	end)
 end
 
-local function showProcessingCue()
-	vim.api.nvim_command('echo "Aider processing ..."')
-	set_idle_status(false)
-end
 
 local function add_buffers_to_command(command, is_valid_buffer)
 	local buffers = vim.api.nvim_list_bufs()
@@ -65,12 +53,6 @@ local function add_buffers_to_command(command, is_valid_buffer)
 	return command
 end
 
-local function build_background_command(args, prompt)
-	prompt = prompt or "Complete as many todo items as you can and remove the comment for any item you complete."
-	local command = 'aider --msg "' .. prompt .. '" ' .. (args or "")
-	command = add_buffers_to_command(command)
-	return command
-end
 
 function open_buffer_in_new_window(window_type, aider_buf)
 	if window_type == "vsplit" then
@@ -96,9 +78,7 @@ end
 return {
 	open_window = open_window,
 	NotifyOnExit = NotifyOnExit,
-	showProcessingCue = showProcessingCue,
 	add_buffers_to_command = add_buffers_to_command,
-	build_background_command = build_background_command,
 	open_buffer_in_new_window = open_buffer_in_new_window,
 	get_git_modified_files = get_git_modified_files,
 }

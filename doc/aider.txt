@@ -36,17 +36,16 @@ In this example, the `setup` function is called with a table that sets `auto_man
 
 The plugin provides the following default keybindings:
 
-- `<leader><Space><Space>` to open a terminal window with the Aider defaults (gpt-4).
-- `<leader><Space>3` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
-- `<leader><space>b` to run the Aider command in the background with the defaults.
-- `<leader><space>b3` to run the Aider command in the background using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Ao` to open a terminal window with the Aider defaults (gpt-4).
+- `<leader>AO` to open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
+- `<leader>Am` to add all git-modified files to the Aider chat.
 
 They can be disabled by setting the `default_bindings` option to `false` in the setup config.
 
 ==============================================================================
 *functions*
 
-The plugin provides the `OpenAider` and `AiderBackground` functions. 
+The plugin provides the `OpenAider` function.
 
 The `OpenAider` function can be called to open a terminal window with the Aider command. The `OpenAider` function accepts the following arguments:
 
@@ -63,19 +62,4 @@ Here are some examples of how to use the `AiderOpen` function:
 
 NOTE: if an Aider job is already running calling AiderOpen will reattach to it, even if it is called with different flags
 
-The `AiderBackground` function runs the Aider command in the background. It accepts the following arguments:
-- `args`: The command line arguments to pass to `aider` - defaults to ""
-- `message`: The message to pass to the Aider command - defaults to "Complete as many todo items as you can and remove the comment for any item you complete."
-
-Here are some examples of how to use the `AiderBackground` function:
-
-```vim
-:lua require('aider').AiderBackground()
-:lua require('aider').AiderBackground("-3")
-:lua require('aider').AiderBackground("AIDER_NO_AUTO_COMMITS=1 aider -3")
-```
-
-*background_status*
-
-The plugin exposes a global variable called `aider_background_status` that you can use to check the status of the Aider background process. The variable can have two values: 'idle' when the background process is not running, and 'working' when the background process is running.
 

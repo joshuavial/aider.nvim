@@ -26,7 +26,6 @@ call dein#add('joshuavial/aider.nvim')
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
-
 ```lua
 {
   "joshuavial/aider.nvim",
@@ -34,9 +33,10 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
     require("aider").setup({
       -- your configuration comes here
       -- if you don't want to use the default settings
-      auto_manage_context = true,
-      default_bindings = true,
-      debug = false, -- Set to true to enable debug logging
+      auto_manage_context = true, -- automatically manage buffer context
+      default_bindings = true,    -- use default <leader>A keybindings
+      debug = false,              -- enable debug logging
+      vim = false                 -- pass --vim flag to aider
     })
   end,
 }
@@ -53,13 +53,7 @@ The Aider Plugin for Neovim provides several functions and commands:
      - `window_type`: Window style to use ('vsplit' (default), 'hsplit', or 'editor')
    - Note: If an Aider job is already running, calling AiderOpen will reattach to it, even with different flags.
 
-2. `AiderBackground`: Runs the Aider command in the background.
-
-   - Arguments:
-     - `args`: Command line arguments to pass to `aider` (default: "")
-     - `message`: Message to pass to the Aider command (default: "Complete as many todo items as you can and remove the comment for any item you complete.")
-
-3. `AiderAddModifiedFiles`: Adds all git-modified files to the Aider chat.
+2. `AiderAddModifiedFiles`: Adds all git-modified files to the Aider chat.
    - This function can be called directly or through the user command `:AiderAddModifiedFiles`
 
 When Aider opens (through either function), it automatically adds all open buffers to both commands. It's recommended to actively manage open buffers with commands like `:ls` and `:bd`.
@@ -70,18 +64,14 @@ Examples of using these commands:
 :AiderOpen
 :AiderOpen -3 hsplit
 :AiderOpen "AIDER_NO_AUTO_COMMITS=1 aider -3" editor
-:AiderBackground
-:AiderBackground -3
-:AiderBackground "AIDER_NO_AUTO_COMMITS=1 aider -3"
 :AiderAddModifiedFiles
 ```
 
 You can set custom keybindings for these commands in your Neovim configuration. For example:
 
 ```lua
-vim.api.nvim_set_keymap('n', '<leader>ao', ':AiderOpen<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>ab', ':AiderBackground<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>am', ':AiderAddModifiedFiles<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>Ao', ':AiderOpen<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>Am', ':AiderAddModifiedFiles<CR>', {noremap = true, silent = true})
 ```
 
 Run `aider --help` to see all the options you can pass to the CLI.
@@ -90,8 +80,6 @@ The plugin provides the following default keybindings:
 
 - `<leader>Ao`: Open a terminal window with the Aider defaults (gpt-4).
 - `<leader>AO`: Open a terminal window with the Aider command using the gpt-3.5-turbo-16k model for chat.
-- `<leader>Ab`: Run the Aider command in the background with the defaults.
-- `<leader>AB`: Run the Aider command in the background using the gpt-3.5-turbo-16k model for chat.
 - `<leader>Am`: Add all git-modified files to the Aider chat.
 
 These keybindings are set up using which-key, providing a descriptive popup menu when you press `<leader>A`.
@@ -120,31 +108,6 @@ require('aider').setup({
 
 In this example, the `setup` function is called with a table that sets `auto_manage_context` to `false` and `default_bindings` to `false`. This means that the plugin will not automatically manage the context and will not use the default keybindings.
 
-## aider_background_status
-
-The plugin exposes a global variable called `aider_background_status` that you can use to check the status of the Aider background process. Here is a snippet which will create a A that will change colours based on whether the background process is running or not.
-
-```lua
-lualine_x = {{
-    function()
-      return 'A'
-    end,
-    color = { fg = '#8FBCBB' }, -- green
-    cond = function()
-      return _G.aider_background_status == 'idle'
-    end
-  },
-  {
-    function()
-      return 'A'
-    end,
-    color = { fg = '#BF616A' }, -- red
-    cond = function()
-      return _G.aider_background_status == 'working'
-    end
-  }
-}
-```
 
 ## Reloading buffers after Aider updates the underlying code
 

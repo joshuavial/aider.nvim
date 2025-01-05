@@ -21,21 +21,9 @@ if use_which_key then
 			group = "Aider",
 		},
 		{
-			"<leader>AB",
-			"<CMD>AiderBackground -3<CR>",
-			desc = "Run Aider (GPT-3.5) in Background",
-			mode = "n",
-		},
-		{
 			"<leader>AO",
 			"<CMD>AiderOpen -3<CR>",
 			desc = "Open Aider (GPT-3.5)",
-			mode = "n",
-		},
-		{
-			"<leader>Ab",
-			"<CMD>AiderBackground<CR>",
-			desc = "Run Aider in Background",
 			mode = "n",
 		},
 		{
@@ -53,14 +41,7 @@ if use_which_key then
 	})
 else
 	-- Set up the actual keybindings when which-key is not available
-	vim.keymap.set(
-		"n",
-		"<leader>AB",
-		aider_command_and_insert("AiderBackground -3"),
-		{ desc = "Run Aider (GPT-3.5) in Background" }
-	)
 	vim.keymap.set("n", "<leader>AO", aider_command_and_insert("AiderOpen -3"), { desc = "Open Aider (GPT-3.5)" })
-	vim.keymap.set("n", "<leader>Ab", aider_command_and_insert("AiderBackground"), { desc = "Run Aider in Background" })
 	vim.keymap.set(
 		"n",
 		"<leader>Am",
