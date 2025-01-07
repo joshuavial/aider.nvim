@@ -14,6 +14,7 @@ local function is_valid_buffer(bufnr)
       buftype ~= ""
       or filetype == "NvimTree"
       or filetype == "neo-tree"
+      or filetype == "AiderConsole"
       or not vim.fn.filereadable(bufname)
       or vim.fn.isdirectory(bufname) == 1
   then
@@ -72,7 +73,8 @@ function M.AiderOpen(args, window_type)
     M.aider_job_id = vim.fn.termopen(command, { on_exit = OnExit })
     log("Terminal opened with job ID: " .. M.aider_job_id)
     log("Set aider_buf to: " .. M.aider_buf)
-    vim.api.nvim_buf_set_option(M.aider_buf, "bufhidden", "hide")
+    vim.bo[M.aider_buf].bufhidden = "hide"
+    vim.bo[M.aider_buf].filetype = "AiderConsole"
   end
   log("AiderOpen completed")
   log("Final aider_buf: " .. (M.aider_buf or "nil"))

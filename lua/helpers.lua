@@ -17,7 +17,6 @@ local function open_editor_relative_window()
 		{ relative = "editor", width = width - 10, height = height - 10, row = 2, col = 2 }
 	)
 	vim.api.nvim_set_current_win(win)
-	vim.bo[buf].buftype = "nofile"
 end
 
 local function open_window(window_type)
