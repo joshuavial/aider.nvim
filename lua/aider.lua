@@ -153,8 +153,11 @@ function M.setup(config)
     default_bindings = true,
     debug = false,
     ignore_buffers = {'^term://', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'},
+    border = nil,
   }
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
+
+  helpers.set_config(M.config)
 
   vim.g.aider_buffer_sync = M.config.auto_manage_context
 
