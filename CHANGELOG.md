@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## dev - 2025-04-17
+## [0.7.0] - 2025-04-17
 - configure border in floating window from @juha-metaplay
 - auto enter insert mode on window open from @dhruvinsh
 
