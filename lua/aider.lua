@@ -180,6 +180,26 @@ function M.setup(config)
     require("keybindings")
   end
 
+  -- create (or reuse) the augroup named "aider_console"
+  local aider_grp = vim.api.nvim_create_augroup("aider_console", { clear = false })
+
+  -- attach your autocmds to that group
+  vim.api.nvim_create_autocmd({ "TermOpen", "TermClose" }, {
+    group   = aider_grp,
+    pattern = "term://*aider*",
+    callback = function(ev)
+      if ev.event == "TermOpen" then
+        vim.opt_local.number     = false
+        vim.opt_local.signcolumn = "no"
+        -- drop into insert mode immediately
+        vim.api.nvim_feedkeys("i", "n", false)
+      else  -- TermClose
+        local enter = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
+        vim.api.nvim_feedkeys(enter, "n", false)
+      end
+    end,
+  })
+
   log("Aider setup completed with debug mode: " .. tostring(M.debug))
 end
 
