@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## dev - 2025-04-17
 - configure border in floating window from @juha-metaplay
+- auto enter insert mode on window open from @dhruvinsh
 
 ## [0.6.0] - 2025-01-08
 - set filetype of terminal window to AiderConsole
