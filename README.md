@@ -89,6 +89,7 @@ The Aider Plugin for Neovim provides a `setup` function that you can use to conf
 - `default_bindings`: A boolean value that determines whether the plugin should use the default keybindings. If set to `true`, the plugin will require the keybindings file and set the default keybindings. Defaults to `true`.
 - `debug`: A boolean value that determines whether the plugin should enable debug logging. When set to true, it will print debug information to help troubleshoot issues. Defaults to false.
 - `ignore_buffers`: A list of matching patterns for buffer names that will be ignored. Defaults to `{'^term:', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'}`.
+- `border`: A table for styling the floating window border. Expected to contain two keys: `style`, a string or a table, and `color`, a string. See [Neovim API documentation](https://neovim.io/doc/user/api.html#nvim_open_win()) for more information on floating window border styling. Defaults to no border. If `border.style` is not defined, `border.color` has no effect.
 
 Here is an example of how to use the `setup` function:
 
@@ -99,6 +100,10 @@ require('aider').setup({
   debug = true,
   vim = true, 
   ignore_buffers = {},
+  border = {
+    style = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- or e.g. "rounded"
+    color = "#fab387",
+  },
 
   -- only necessary if you want to change the default keybindings. <Leader>C is not a particularly good choice. It's just shown as an example.
   vim.api.nvim_set_keymap('n', '<leader>C', ':AiderOpen --no-auto-commits<CR>', {noremap = true, silent = true})
