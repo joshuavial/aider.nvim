@@ -62,7 +62,7 @@ function M.AiderOpen(args, window_type)
     helpers.open_buffer_in_new_window(window_type, M.aider_buf)
   else
     log("No existing aider buffer, creating new one")
-    local command = "aider " .. (args or "")
+    local command = M.config.aider_command .. " " .. (args or "")
     log("Opening window with type: " .. window_type)
     helpers.open_window(window_type)
     log("Adding buffers to command")
@@ -138,7 +138,7 @@ function M.AiderAddModifiedFiles()
     end, 1000)
     return
   end
-  
+
   local modified_files = helpers.get_git_modified_files()
   for _, file in ipairs(modified_files) do
     local line_to_add = "/add " .. file
@@ -152,8 +152,9 @@ function M.setup(config)
     auto_manage_context = true,
     default_bindings = true,
     debug = false,
-    ignore_buffers = {'^term://', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'},
+    ignore_buffers = { '^term://', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem' },
     border = nil,
+    aider_command = "aider",
   }
   M.config = vim.tbl_deep_extend('force', M.config, config or {})
 
@@ -185,15 +186,15 @@ function M.setup(config)
 
   -- attach your autocmds to that group
   vim.api.nvim_create_autocmd({ "TermOpen", "TermClose" }, {
-    group   = aider_grp,
-    pattern = "term://*aider*",
+    group    = aider_grp,
+    pattern  = "term://*aider*",
     callback = function(ev)
       if ev.event == "TermOpen" then
         vim.opt_local.number     = false
         vim.opt_local.signcolumn = "no"
         -- drop into insert mode immediately
         vim.api.nvim_feedkeys("i", "n", false)
-      else  -- TermClose
+      else -- TermClose
         local enter = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
         vim.api.nvim_feedkeys(enter, "n", false)
       end

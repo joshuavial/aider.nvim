@@ -89,6 +89,7 @@ The Aider Plugin for Neovim provides a `setup` function that you can use to conf
 - `default_bindings`: A boolean value that determines whether the plugin should use the default keybindings. If set to `true`, the plugin will require the keybindings file and set the default keybindings. Defaults to `true`.
 - `debug`: A boolean value that determines whether the plugin should enable debug logging. When set to true, it will print debug information to help troubleshoot issues. Defaults to false.
 - `ignore_buffers`: A list of matching patterns for buffer names that will be ignored. Defaults to `{'^term:', 'NeogitConsole', 'NvimTree_', 'neo-tree filesystem'}`.
+- `aider_command`: A string specifying the `aider` command to execute. Useful if `aider` is not in your PATH or you want to use a specific version. Defaults to `"aider"`.
 - `border`: A table for styling the floating window border. Expected to contain two keys: `style`, a string or a table, and `color`, a string. See [Neovim API documentation](https://neovim.io/doc/user/api.html#nvim_open_win()) for more information on floating window border styling. Defaults to no border. If `border.style` is not defined, `border.color` has no effect.
 
 Here is an example of how to use the `setup` function:
